@@ -17,21 +17,44 @@ module controlador_principal
               MAX_SONO = 7'd100,
               MAX_FELICIDADE = 7'd100;
 
+    // Velocidades atributos
+    parameter VEL_DESCIDA = 8'd1,
+              VEL_SUBIDA = 8'd7;
+
     // Contador para controlar o incremento dos atributos
     parameter CONTADOR_MAX = 19'd66;
-    reg [6:0] contador; 
+    reg [6:0] contador, contador_morte; 
 
     // Estado inicial
     initial 
     begin
         estado = IDLE;
-        fome = 7'd40;
-        felicidade = 7'd50;
-        sono = 7'd20;
+        fome = 7'd80;
+        felicidade = 7'd70;
+        sono = 7'd50;
     end
 
     // Lógica principal
-    always @(posedge clk) begin
+    always @(posedge clk) 
+    begin
+
+        // Atributos
+        if (contador_morte < CONTADOR_MAX)
+                contador_morte = contador_morte + 7'd1;
+        else
+        begin
+            contador_morte = 7'd0;
+            
+            fome = fome - VEL_DESCIDA;
+            sono = sono - VEL_DESCIDA;
+            felicidade = felicidade - VEL_DESCIDA;
+        end
+
+        // Verificação pra ver se morreu
+        if (fome <= 10 || sono <= 10 || felicidade <= 10)
+            estado = MORTO;
+
+        // Controle de estados
         case (estado)
             IDLE: 
             begin
@@ -44,7 +67,7 @@ module controlador_principal
                 else
                     estado = IDLE;
 
-                contador = 19'd0;
+                contador = 7'd0;
             end
             DORMINDO: 
             begin
@@ -61,7 +84,7 @@ module controlador_principal
                         contador = 7'd0;
                         
                         if (sono < MAX_SONO)
-                            sono = sono + 8'd1;
+                            sono = sono + VEL_SUBIDA;
                     end
                 end
             end
@@ -80,7 +103,7 @@ module controlador_principal
                         contador = 7'd0;
                         
                         if (fome < MAX_FOME)
-                            fome = fome + 8'd1;
+                            fome = fome + VEL_SUBIDA;
                     end
                 end
             end
@@ -99,7 +122,7 @@ module controlador_principal
                         contador = 7'd0;
                         
                         if (felicidade < MAX_FELICIDADE)
-                            felicidade = felicidade + 8'd1;
+                            felicidade = felicidade + VEL_SUBIDA;
                     end
                 end
             end

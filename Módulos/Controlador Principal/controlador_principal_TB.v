@@ -26,6 +26,8 @@ begin
     #5 clk = ~clk;
 end
 
+integer morreu, i;
+
 initial 
     begin
 
@@ -38,10 +40,9 @@ initial
     $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
     $display("-------------------------\n");
 
-    // PARA QUANDO FIZER A LÓGICA DE IR DIMINUINDO OS ATRIBUTOS COM O TEMPO
-    // #3000;  // 3 segundos se passam
-    // $display("3 segundos depois...");
-    // $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d\n---\n", estado, fome, sono, felicidade);
+    #3000;  // 3 segundos se passam
+    $display("3 segundos depois...");
+    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d\n---\n", estado, fome, sono, felicidade);
 
     // IDLE para COMENDO
     $display("-------------------------");
@@ -140,6 +141,28 @@ initial
     b2 = 1;
     #10;
     $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
+    $display("-------------------------\n");
+
+    // TESTA MORTE
+    $display("-------------------------");
+    $display("FAZ NADA ATÉ MORRER");
+    b1 = 0;
+    b2 = 0;
+    #10;
+    morreu = 0;
+    i = 0;
+
+    while (morreu == 0)
+    begin
+
+        #1000;
+        $display("%d segundo(s) depois...", i + 1);
+        $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
+
+        if (estado == 3'b100)
+            morreu = 1;
+        i = i + 1;
+    end
     $display("-------------------------\n");
 
     $finish;
