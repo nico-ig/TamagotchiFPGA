@@ -1,72 +1,113 @@
 module controlador_principal
 (
     input wire b1, b2, clk, 
-    output reg[2:0] estado,
-    output reg[64:0] fome, felicidade, sono
+    output reg [2:0] estado,
+    output reg [7:0] fome, felicidade, sono    // Atributos
 );
 
+    // Estados possíveis
     parameter IDLE = 3'b000, 
               DORMINDO = 3'b001, 
-              ACORDANDO = 3'b010,
-              COMENDO = 3'b011,
-              LIMPANDO_BOCA = 3'b100,
-              DANDO_AULA = 3'b101,
-              VOLTANDO = 3'b110,
-              MORTO = 3'b111;
+              COMENDO = 3'b010,
+              DANDO_AULA = 3'b011,
+              MORTO = 3'b100;
+    
+    // MAX ATRIBUTOS
+    parameter MAX_FOME = 7'd100,
+              MAX_SONO = 7'd100,
+              MAX_FELICIDADE = 7'd100;
 
-    reg[2:0] estado_atual, prox_estado;
+    // Contador para controlar o incremento dos atributos
+    parameter CONTADOR_MAX = 19'd66;
+    reg [6:0] contador; 
 
-    // Reset ?
-
-    always @*
+    // Estado inicial
+    initial 
     begin
-        case (estado_atual)
+        estado = IDLE;
+        fome = 7'd40;
+        felicidade = 7'd50;
+        sono = 7'd20;
+    end
 
-            IDLE:
+    // Lógica principal
+    always @(posedge clk) begin
+        case (estado)
+            IDLE: 
             begin
                 if (b1 && !b2)
-                    prox_estado = COMENDO;
+                    estado = COMENDO;
                 else if (b2 && !b1)
-                    prox_estado = DORMINDO;
+                    estado = DORMINDO;
                 else if (b1 && b2)
-                    prox_estado = DANDO_AULA;
-            end 
-            DORMINDO:
+                    estado = DANDO_AULA;
+                else
+                    estado = IDLE;
+
+                contador = 19'd0;
+            end
+            DORMINDO: 
             begin
                 if (b2)
-                    prox_estado = ACORDANDO;
+                    estado = IDLE;
+                else
+                begin
+                    estado = DORMINDO;
+
+                    if (contador < CONTADOR_MAX)
+                        contador = contador + 7'd1;
+                    else
+                    begin
+                        contador = 7'd0;
+                        
+                        if (sono < MAX_SONO)
+                            sono = sono + 8'd1;
+                    end
+                end
             end
-            ACORDANDO:
-            begin
-                // Se acabou animação 
-                // prox_estado = IDLE
-            end
-            COMENDO:
+            COMENDO: 
             begin
                 if (b1)
-                    prox_estado = LIMPANDO_BOCA;
+                    estado = IDLE;
+                else
+                begin
+                    estado = COMENDO;
+
+                    if (contador < CONTADOR_MAX)
+                        contador = contador + 7'd1;
+                    else
+                    begin
+                        contador = 7'd0;
+                        
+                        if (fome < MAX_FOME)
+                            fome = fome + 8'd1;
+                    end
+                end
             end
-            LIMPANDO_BOCA:
-            begin
-                // Se acabou animação
-                // prox_estado = IDLE
-            end
-            DANDO_AULA:
+            DANDO_AULA: 
             begin
                 if (b1 && b2)
-                    prox_estado = VOLTANDO;
-            end
-            VOLTANDO:
-            begin
-                // Se acabou animação
-                // prox_estado = IDLE
-            end
-            MORTO:
-            begin
-                prox_estado = MORTO;
-            end
+                    estado = IDLE;
+                else
+                begin
+                    estado = DANDO_AULA;
 
-            default: prox_estado = IDLE;
+                    if (contador < CONTADOR_MAX)
+                        contador = contador + 7'd1;
+                    else
+                    begin
+                        contador = 7'd0;
+                        
+                        if (felicidade < MAX_FELICIDADE)
+                            felicidade = felicidade + 8'd1;
+                    end
+                end
+            end
+            MORTO: 
+            begin
+                estado = MORTO;
+            end
+            default: estado = IDLE;
         endcase
     end
 
