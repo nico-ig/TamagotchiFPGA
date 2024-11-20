@@ -3,7 +3,7 @@
 module test();
   reg clk = 0;
   wire sclk, sdin, dc, reset, cs;
-  screen #(11'b10) s(
+  controlador_display #(11'b10) s(
       clk,
       sclk,
       sdin,
@@ -21,7 +21,7 @@ module test();
     end
   initial
      begin
-       $dumpfile("screen.vcd");
+       $dumpfile("controlador_display.vcd");
        $dumpvars(0,test);
       end
 endmodule

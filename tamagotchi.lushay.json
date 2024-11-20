@@ -1,0 +1,7 @@
+{
+    "name": "tamagochi",
+    "includedFiles": "all",
+    "testBenches": "all",
+    "top": "controlador_display",
+    "constraintsFile": "tangnano9k.cst"
+}

@@ -1,6 +1,6 @@
 `default_nettype none
 
-module screen
+module controlador_display
 #(
   parameter STARTUP_WAIT = 32'd10000000
 )
