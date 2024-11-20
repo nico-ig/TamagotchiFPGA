@@ -1,0 +1,6 @@
+___module_export.json
+tamagochi.fs
+tamagochi.json
+tamagochi_pnr.json
+*.DS_Store
+*node_modules*
