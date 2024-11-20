@@ -7,6 +7,7 @@ for file in sys.argv[1:]:
     img //= 255
     img = np.concatenate(img)
     img = ''.join(map(str, img))
+    b = int(img, 2).to_bytes(len(img) // 8, byteorder='big')
 
-    with open('hexs/'+file.split('/')[1].split('.')[0]+'.hex', 'w') as f:
-            f.write(f"{img}")
+    with open('hexs/'+file.split('/')[1].split('.')[0]+'.hex', 'wb') as f:
+            f.write(b)
