@@ -15,5 +15,8 @@ for file in sys.argv[1:]:
              hex_f += " "
     hex_f = hex_f[0:len(hex_f)-1]
 
+    
+
+
     with open('hexs/'+file.split('/')[1].split('.')[0]+'.hex', 'w') as f:
             f.write(f"{hex_f}")
