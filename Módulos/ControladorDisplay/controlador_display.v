@@ -42,7 +42,7 @@ module controlador_display
     8'hA6,  // normal screen mode (not inverted)
 
     8'h20,  // horizontal addressing mode
-    8'h00,  
+    8'h01,  
 
     8'hC8,  // normal scan direction
 
