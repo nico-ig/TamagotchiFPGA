@@ -32,17 +32,17 @@ Durante todas as telas (Menos a de morte), as barras de Fome, Sono e Felicidade 
 
 Módulo do topo que junta todos os módulos necessários para funcionamento do Zanagotchi.
 
-### Controlador Principal  
+### Controlador Estados  
 
-O módulo que controla a lógica principal do Tamagotchi, recebe a saída do **Controlador dos botões** e o clock como entrada, e tem como saída a imagem que entrará no display.
+Módulo que controla a troca de estados baseado na combinação de botões pressionados.  
 
 ### Controlador Botões
 
 Módulo que recebe a entrada dos botões e trata elas para entrarem no controlador principal.
 
-### Controlador Atributo
+### Controlador Atributos
 
-Módulo que controla o decréscimo ou incremento de um atributo.
+Módulo que controla operações sobre os atributos definidos baseado no estado atual.  
 
 ### Controlador Display
 
