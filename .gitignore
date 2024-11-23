@@ -4,3 +4,8 @@ tamagochi.json
 tamagochi_pnr.json
 *.DS_Store
 *node_modules*
+*.vcd
+*a.out
+*cache*
+*python*
+*venv*

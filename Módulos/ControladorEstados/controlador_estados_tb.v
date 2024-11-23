@@ -2,18 +2,15 @@
 
 module controlador_estados_tb ();
 
-reg b1, b2, clk;
-wire [2:0] estado;
-wire [7:0] fome, felicidade, sono;
+reg b1, b2, morreu, clk;
+wire [3:0] estado;
 
 controlador_estados DUT (
     .b1(b1), 
     .b2(b2), 
+    .morreu(morreu),
     .clk(clk), 
-    .estado(estado), 
-    .fome(fome), 
-    .felicidade(felicidade), 
-    .sono(sono)
+    .estado(estado)
 );
 
 initial
@@ -26,7 +23,7 @@ begin
     #5 clk = ~clk;
 end
 
-integer morreu, i;
+integer i;
 
 initial 
     begin
@@ -37,12 +34,12 @@ initial
     b1 = 0;
     b2 = 0;
     #10;
-    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
+    $display("ESTADO: %b", estado);
     $display("-------------------------\n");
 
     #3000;  // 3 segundos se passam
     $display("3 segundos depois...");
-    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d\n---\n", estado, fome, sono, felicidade);
+    $display("ESTADO: %b", estado);
 
     // IDLE para COMENDO
     $display("-------------------------");
@@ -50,20 +47,20 @@ initial
     b1 = 1;
     b2 = 0;
     #10;
-    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
+    $display("ESTADO: %b", estado);
     $display("-------------------------\n");
 
     b1 = 0;
     b2 = 0;
     #10;
     $display("-------------------------");
-    $display("Mantendo no estado comendo e verificando a fome subir");
+    $display("Mantendo no estado comendo");
     for (integer i = 0; i < 3; i++)
     begin
 
         #1000;
         $display("%d segundo(s) depois...", i + 1);
-        $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
+        $display("ESTADO: %b", estado);
 
     end
     $display("-------------------------\n");
@@ -74,7 +71,7 @@ initial
     b1 = 1;
     b2 = 0;
     #10;
-    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
+    $display("ESTADO: %b", estado);
     $display("-------------------------\n");
 
     // IDLE para DORMINDO
@@ -83,20 +80,20 @@ initial
     b1 = 0;
     b2 = 1;
     #10;
-    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
+    $display("ESTADO: %b", estado);
     $display("-------------------------\n");
 
     b1 = 0;
     b2 = 0;
     #10;
     $display("-------------------------");
-    $display("Mantendo no estado dormindo e verificando o sono subir");
+    $display("Mantendo no estado dormindo");
     for (integer i = 0; i < 3; i++)
     begin
 
         #1000;
         $display("%d segundo(s) depois...", i + 1);
-        $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
+        $display("ESTADO: %b", estado);
 
     end
     $display("-------------------------\n");
@@ -107,7 +104,7 @@ initial
     b1 = 0;
     b2 = 1;
     #10;
-    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
+    $display("ESTADO: %b", estado);
     $display("-------------------------\n");
 
     // IDLE para DANDO_AULA
@@ -116,20 +113,20 @@ initial
     b1 = 1;
     b2 = 1;
     #10;
-    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
+    $display("ESTADO: %b", estado);
     $display("-------------------------\n");
 
     b1 = 0;
     b2 = 0;
     #10;
     $display("-------------------------");
-    $display("Mantendo no estado dormindo e verificando a felicidade subir");
+    $display("Mantendo no estado dormindo");
     for (integer i = 0; i < 3; i++)
     begin
 
         #1000;
         $display("%d segundo(s) depois...", i + 1);
-        $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
+        $display("ESTADO: %b", estado);
 
     end
     $display("-------------------------\n");
@@ -140,30 +137,24 @@ initial
     b1 = 1;
     b2 = 1;
     #10;
-    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
+    $display("ESTADO: %b", estado);
     $display("-------------------------\n");
 
     // TESTA MORTE
     $display("-------------------------");
-    $display("FAZ NADA ATÉ MORRER");
-    b1 = 0;
-    b2 = 0;
+    $display("Morreu");
     #10;
-    morreu = 0;
+    morreu = 1;
     i = 0;
 
-    while (morreu == 0)
+    for (integer i = 0; i < 3; i++)
     begin
 
         #1000;
         $display("%d segundo(s) depois...", i + 1);
-        $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d", estado, fome, sono, felicidade);
+        $display("ESTADO: %b", estado);
 
-        if (estado == 3'b100)
-            morreu = 1;
-        i = i + 1;
     end
-    $display("-------------------------\n");
 
     $finish;
 end

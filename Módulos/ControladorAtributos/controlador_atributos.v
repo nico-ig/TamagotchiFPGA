@@ -1,10 +1,14 @@
 module controlador_atributos
 (
     input wire clk,
-    input wire [2:0] estado,
+    input wire [3:0] estado,
     output reg [7:0] fome, felicidade, sono,
     output reg morreu
 );
+    // ESTADOS
+    localparam DORMINDO = 4'b0001,
+               COMENDO = 4'b0010,
+               DANDO_AULA = 4'b0100;
 
     // MAX ATRIBUTOS
     localparam MAX_FOME = 7'd100,
@@ -16,8 +20,7 @@ module controlador_atributos
                VEL_SUBIDA = 8'd7;
 
     // Contador para controlar o incremento dos atributos
-    localparam CONTADOR_MAX = 8'd66;
-    reg [7:0] contador, contador_morte; 
+    reg [7:0] contador;
 
     // Estado inicial
     initial 
@@ -26,69 +29,80 @@ module controlador_atributos
         felicidade = 7'd70;
         sono = 7'd50;
         contador = 8'd0;
-        contador_morte = 8'd0;
         morreu = 0;
     end
 
     // Lógica principal
     always @(posedge clk) 
-    begin
+    begin       
+        contador <= contador + 1;
 
-        // Verificação pra ver se morreu
-        if (fome <= 10 || sono <= 10 || felicidade <= 10)
-            morreu = 1'b1;
-
-        // Decréscimo de atributos
-        if (contador_morte < CONTADOR_MAX)
-            contador_morte <= contador_morte + 1;
-        else    // Contador zerou = Hora de decrementar
+        if (contador)
         begin
-
-            contador_morte <= 8'd0;
-
-            if (fome > VEL_DESCIDA)
-                fome <= fome - VEL_DESCIDA;
-            if (sono > VEL_DESCIDA)
-                sono <= sono - VEL_DESCIDA;
-            if (felicidade > VEL_DESCIDA)
-                felicidade <= felicidade - VEL_DESCIDA;
+            sono <= sono;
+            fome <= fome;
+            felicidade <= felicidade;
         end
+        else
+        begin
+            // Incremento/decrementando de atributos
+            case(estado)
+                DORMINDO:
+                begin
+                    sono <= sono < MAX_SONO - VEL_SUBIDA ? 
+                            sono + VEL_SUBIDA : 
+                            MAX_SONO;
+                    
+                    fome <= fome > VEL_DESCIDA ? 
+                        fome - VEL_DESCIDA : 
+                        0;
 
-        // Incremento de atributos
-        case (estado)
-            3'b001: // DORMINDO
-            begin
-                if (contador < CONTADOR_MAX)
-                    contador <= contador + 1;
-                else
-                begin
-                    contador <= 8'd0;
-                    if (sono < MAX_SONO)
-                        sono <= sono + VEL_SUBIDA;
+                    felicidade <= felicidade > VEL_DESCIDA ? 
+                        felicidade - VEL_DESCIDA : 
+                        0;
                 end
-            end
-            3'b010: // COMENDO
-            begin
-                if (contador < CONTADOR_MAX)
-                    contador <= contador + 1;
-                else
+
+                COMENDO:
                 begin
-                    contador <= 8'd0;
-                    if (fome < MAX_FOME)
-                        fome <= fome + VEL_SUBIDA;
+                    fome <= fome > VEL_DESCIDA ? 
+                            fome - VEL_DESCIDA : 
+                            0;
+
+                    fome <= fome < MAX_FOME - VEL_SUBIDA ? 
+                            fome + VEL_SUBIDA : 
+                            MAX_FOME;
+
+                    felicidade <= felicidade > VEL_DESCIDA ? 
+                                  felicidade - VEL_DESCIDA : 
+                                  0;
                 end
-            end
-            3'b011: // DANDO_AULA
-            begin
-                if (contador < CONTADOR_MAX)
-                    contador <= contador + 1;
-                else
+
+                DANDO_AULA:
                 begin
-                    contador <= 8'd0;
-                    if (felicidade < MAX_FELICIDADE)
-                        felicidade <= felicidade + VEL_SUBIDA;
+                    sono <= sono;
+                    fome <= fome;
+                    felicidade <= felicidade < MAX_FELICIDADE - VEL_SUBIDA ? 
+                                  felicidade + VEL_SUBIDA : 
+                                  MAX_FELICIDADE;
+                end           
+                default:
+                begin
+                    fome <= fome > VEL_DESCIDA ? 
+                        fome - VEL_DESCIDA : 
+                        0;
+
+                    sono <= sono > VEL_DESCIDA ? 
+                        sono - VEL_DESCIDA : 
+                        0;
+
+                    felicidade <= felicidade > VEL_DESCIDA ? 
+                            felicidade - VEL_DESCIDA : 
+                            0;
                 end
-            end
-        endcase
+            endcase
+
+            // Verificação pra ver se morreu
+            morreu <= morreu || fome <= 10 || sono <= 10 || felicidade <= 10;
+        end
     end
 endmodule
