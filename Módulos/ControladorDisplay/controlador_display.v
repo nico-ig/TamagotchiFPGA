@@ -6,6 +6,7 @@ module controlador_display
 )
 (
     input clk,
+    input [1024*8-1:0] image,
     output io_sclk,
     output io_sdin,
     output io_cs,
@@ -30,7 +31,7 @@ module controlador_display
 
   reg [7:0] dataToSend = 0;
   reg [3:0] bitNumber = 0;  
-  reg [9:0] pixelCounter = 0;
+  reg [12:0] pixelCounter = 0;
 
   localparam SETUP_INSTRUCTIONS = 23;
   reg [(SETUP_INSTRUCTIONS*8)-1:0] startupCommands = {
@@ -80,9 +81,6 @@ module controlador_display
   assign io_reset = reset;
   assign io_cs = cs;
 
-  reg [7:0] screenBuffer [1023:0];
-  initial $readmemh("image.hex", screenBuffer);
-
   always @(posedge clk) begin
     case (state)
       STATE_INIT_POWER: begin
@@ -129,12 +127,12 @@ module controlador_display
             state <= STATE_LOAD_INIT_CMD; 
       end
       STATE_LOAD_DATA: begin
-        pixelCounter <= pixelCounter + 1;
         cs <= 0;
         dc <= 1;
         bitNumber <= 3'd7;
         state <= STATE_SEND;
-        dataToSend <= screenBuffer[pixelCounter];
+        dataToSend <= image[(pixelCounter+7)-:8'd8];
+        pixelCounter <= pixelCounter + 8;
       end
     endcase
   end
