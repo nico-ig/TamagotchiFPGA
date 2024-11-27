@@ -38,7 +38,7 @@ module controlador_imagens_tb();
         $fwrite(file, "%02x", imagem[1023*8 +: 8]);  // Último byte sem espaço
         
         $fclose(file);
-        $display("Estado: %b [IDLE] = Imagem escrita em /Imagens/LogImagens/zanagotchi_idle1.hex", estado);
+        $display("Estado: %b [IDLE] = Imagem escrita em ../Imagens/LogImagens/zanagotchi_idle1.hex", estado);
 
         // DORMINDO
         estado = 4'b0001;
@@ -50,7 +50,7 @@ module controlador_imagens_tb();
         $fwrite(file, "%02x", imagem[1023*8 +: 8]);  // Último byte sem espaço
 
         $fclose(file);
-        $display("Estado: %b [DORMINDO] = Imagem escrita em Imagens/LogImagens/zanagotchi_dormindo1.hex", estado);
+        $display("Estado: %b [DORMINDO] = Imagem escrita em ../Imagens/LogImagens/zanagotchi_dormindo1.hex", estado);
 
         // COMENDO
         estado = 4'b0010;
@@ -62,7 +62,7 @@ module controlador_imagens_tb();
         $fwrite(file, "%02x", imagem[1023*8 +: 8]);  // Último byte sem espaço
 
         $fclose(file);
-        $display("Estado: %b [COMENDO] = Imagem escrita em Imagens/LogImagens/zanagotchi_comendo1.hex", estado);
+        $display("Estado: %b [COMENDO] = Imagem escrita em ../Imagens/LogImagens/zanagotchi_comendo1.hex", estado);
 
         // DANDO_AULA
         estado = 4'b0011;
@@ -74,7 +74,7 @@ module controlador_imagens_tb();
         $fwrite(file, "%02x", imagem[1023*8 +: 8]);  // Último byte sem espaço
 
         $fclose(file);
-        $display("Estado: %b [DANDO_AULA] = Imagem escrita em Imagens/LogImagens/zanagotchi_dando_aula1.hex", estado);
+        $display("Estado: %b [DANDO_AULA] = Imagem escrita em ../Imagens/LogImagens/zanagotchi_dando_aula1.hex", estado);
 
         // MORTO
         estado = 4'b0100;
@@ -86,7 +86,7 @@ module controlador_imagens_tb();
         $fwrite(file, "%02x", imagem[1023*8 +: 8]);  // Último byte sem espaço
 
         $fclose(file);
-        $display("Estado: %b [MORTO] = Imagem escrita em Imagens/LogImagens/zanagotchi_morto1.hex", estado);
+        $display("Estado: %b [MORTO] = Imagem escrita em ../Imagens/LogImagens/zanagotchi_morto1.hex", estado);
 
         $finish;
     end

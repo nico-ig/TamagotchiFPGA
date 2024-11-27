@@ -13,35 +13,56 @@ module controlador_imagens
                MORTO = 4'b0100;
 
     // Memória para armazenar todas as imagens inicialmente
-    reg[7:0] memoria_imagens[0:5*1024-1];  // 5 imagens de 1024 bytes cada -- AUMENTAR QUANDO TIVER MAIS IMGS
+    reg[7:0] memoria_idle[0:1023][0:0];
+    reg[7:0] memoria_dormindo[0:1023][0:0];
+    reg[7:0] memoria_comendo[0:1023][0:0];
+    reg[7:0] memoria_dando_aula[0:1023][0:0];
+    reg[7:0] memoria_morto[0:1023][0:0];
+    reg[7:0] tmp[0:1023];
 
     // Inicializa a memória
     initial 
     begin
-        $readmemh("../Imagens/hexs/Idle/zanagotchi_idle1.hex", memoria_imagens, 0*1024, 0*1024 + 1023);
-        $readmemh("../Imagens/hexs/Dormindo/zanagotchi_dormindo1.hex", memoria_imagens, 1*1024, 1*1024 + 1023);
-        $readmemh("../Imagens/hexs/Comendo/zanagotchi_comendo1.hex", memoria_imagens, 2*1024, 2*1024 + 1023);
-        $readmemh("../Imagens/hexs/DandoAula/zanagotchi_dando_aula1.hex", memoria_imagens, 3*1024, 3*1024 + 1023);
-        $readmemh("../Imagens/hexs/Morto/zanagotchi_morto1.hex", memoria_imagens, 4*1024, 4*1024 + 1023);
+        $readmemh("../Imagens/hexs/Idle/zanagotchi_idle1.hex", tmp);
+        for (integer i = 0; i < 1024; i = i + 1)
+            memoria_idle[i][0] = tmp[i];
+        $readmemh("../Imagens/hexs/Dormindo/zanagotchi_dormindo1.hex", tmp);
+        for (integer i = 0; i < 1024; i = i + 1)
+            memoria_dormindo[i][0] = tmp[i];
+        $readmemh("../Imagens/hexs/Comendo/zanagotchi_comendo1.hex", tmp);
+        for (integer i = 0; i < 1024; i = i + 1)
+            memoria_comendo[i][0] = tmp[i];
+        $readmemh("../Imagens/hexs/DandoAula/zanagotchi_dando_aula1.hex", tmp);
+        for (integer i = 0; i < 1024; i = i + 1)
+            memoria_dando_aula[i][0] = tmp[i];
+        $readmemh("../Imagens/hexs/Morto/zanagotchi_morto1.hex", tmp);
+        for (integer i = 0; i < 1024; i = i + 1)
+            memoria_morto[i][0] = tmp[i];
     end
 
     // Atualização de imagens baseada no estado
-    always @(posedge clk) 
-    begin : ImagensBlock
-
-        integer index_memoria;
-
+    always @* 
+    begin
         case (estado)
-            IDLE: index_memoria = 0*1024;
-            DORMINDO: index_memoria = 1*1024;
-            COMENDO: index_memoria = 2*1024;
-            DANDO_AULA: index_memoria = 3*1024;
-            MORTO: index_memoria = 4*1024;
-            default: index_memoria = 0*1024;
+            IDLE: 
+            for (integer i = 0; i < 1024; i = i + 1)
+                imagem[i*8 +: 8] <= memoria_idle[i][0];
+            DORMINDO:
+            for (integer i = 0; i < 1024; i = i + 1)
+                imagem[i*8 +: 8] <= memoria_dormindo[i][0];
+            COMENDO:
+            for (integer i = 0; i < 1024; i = i + 1)
+                imagem[i*8 +: 8] <= memoria_comendo[i][0];
+            DANDO_AULA:
+            for (integer i = 0; i < 1024; i = i + 1)
+                imagem[i*8 +: 8] <= memoria_dando_aula[i][0];
+            MORTO:
+            for (integer i = 0; i < 1024; i = i + 1)
+                imagem[i*8 +: 8] <= memoria_morto[i][0];
+            default:
+            for (integer i = 0; i < 1024; i = i + 1)
+                imagem[i*8 +: 8] <= imagem[i];
         endcase
 
-        // Copia os dados da memória para a saída
-        for (integer i = 0; i < 1024; i = i + 1)
-            imagem[i*8 +: 8] <= memoria_imagens[index_memoria + i];
     end
 endmodule
