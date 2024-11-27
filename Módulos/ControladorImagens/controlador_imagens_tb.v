@@ -31,62 +31,62 @@ module controlador_imagens_tb();
         // IDLE
         estado = 4'b0000;
         #10;
-        file = $fopen("LogImagens/zanagotchi_idle1.hex", "w");
+        file = $fopen("../Imagens/LogImagens/zanagotchi_idle1.hex", "w");
 
         for (integer i = 0; i < 1023; i = i + 1)
             $fwrite(file, "%02x ", imagem[i*8 +: 8]);
         $fwrite(file, "%02x", imagem[1023*8 +: 8]);  // Último byte sem espaço
         
         $fclose(file);
-        $display("Estado: %b [IDLE] = Imagem escrita em LogImagens/zanagotchi_idle1.hex", estado);
+        $display("Estado: %b [IDLE] = Imagem escrita em /Imagens/LogImagens/zanagotchi_idle1.hex", estado);
 
         // DORMINDO
         estado = 4'b0001;
-        #10;
-        file = $fopen("LogImagens/zanagotchi_dormindo1.hex", "w");
+        #3000;
+        file = $fopen("../Imagens/LogImagens/zanagotchi_dormindo1.hex", "w");
 
         for (integer i = 0; i < 1023; i = i + 1)
             $fwrite(file, "%02x ", imagem[i*8 +: 8]);
         $fwrite(file, "%02x", imagem[1023*8 +: 8]);  // Último byte sem espaço
 
         $fclose(file);
-        $display("Estado: %b [DORMINDO] = Imagem escrita em LogImagens/zanagotchi_dormindo1.hex", estado);
+        $display("Estado: %b [DORMINDO] = Imagem escrita em Imagens/LogImagens/zanagotchi_dormindo1.hex", estado);
 
         // COMENDO
         estado = 4'b0010;
         #10;
-        file = $fopen("LogImagens/zanagotchi_comendo1.hex", "w");
+        file = $fopen("../Imagens/LogImagens/zanagotchi_comendo1.hex", "w");
 
         for (integer i = 0; i < 1023; i = i + 1)
             $fwrite(file, "%02x ", imagem[i*8 +: 8]);
         $fwrite(file, "%02x", imagem[1023*8 +: 8]);  // Último byte sem espaço
 
         $fclose(file);
-        $display("Estado: %b [COMENDO] = Imagem escrita em LogImagens/zanagotchi_comendo1.hex", estado);
+        $display("Estado: %b [COMENDO] = Imagem escrita em Imagens/LogImagens/zanagotchi_comendo1.hex", estado);
 
         // DANDO_AULA
         estado = 4'b0011;
         #10;
-        file = $fopen("LogImagens/zanagotchi_dando_aula1.hex", "w");
+        file = $fopen("../Imagens/LogImagens/zanagotchi_dando_aula1.hex", "w");
 
         for (integer i = 0; i < 1023; i = i + 1)
             $fwrite(file, "%02x ", imagem[i*8 +: 8]);
         $fwrite(file, "%02x", imagem[1023*8 +: 8]);  // Último byte sem espaço
 
         $fclose(file);
-        $display("Estado: %b [DANDO_AULA] = Imagem escrita em LogImagens/zanagotchi_dando_aula1.hex", estado);
+        $display("Estado: %b [DANDO_AULA] = Imagem escrita em Imagens/LogImagens/zanagotchi_dando_aula1.hex", estado);
 
         // MORTO
         estado = 4'b0100;
         #10;
-        file = $fopen("LogImagens/zanagotchi_morto1.hex", "w");
+        file = $fopen("../Imagens/LogImagens/zanagotchi_morto1.hex", "w");
 
         for (integer i = 0; i < 1023; i = i + 1)
             $fwrite(file, "%02x ", imagem[i*8 +: 8]);
         $fwrite(file, "%02x", imagem[1023*8 +: 8]);  // Último byte sem espaço
 
         $fclose(file);
-        $display("Estado: %b [MORTO] = Imagem escrita em LogImagens/zanagotchi_morto1.hex", estado);
+        $display("Estado: %b [MORTO] = Imagem escrita em Imagens/LogImagens/zanagotchi_morto1.hex", estado);
 
         $finish;
     end
