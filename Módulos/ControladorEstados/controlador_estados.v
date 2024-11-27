@@ -8,8 +8,8 @@ module controlador_estados
     localparam IDLE = 4'b0000, 
                DORMINDO = 4'b0001, 
                COMENDO = 4'b0010,
-               DANDO_AULA = 4'b0100,
-               MORTO = 4'b1000;
+               DANDO_AULA = 4'b0011,
+               MORTO = 4'b0100;
 
     initial
     begin
