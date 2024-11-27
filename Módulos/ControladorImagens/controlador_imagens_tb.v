@@ -2,29 +2,17 @@
 
 module controlador_imagens_tb();
 
-    reg clk;
     reg [3:0] estado;
     wire [1024*8-1:0] imagem;
 
     controlador_imagens DUT 
     (
-        .clk(clk),
         .estado(estado),
         .imagem(imagem)
     );
 
     // Inteiro para o arquivo
     integer file;
-
-    initial 
-    begin
-        clk = 0;
-    end
-
-    always 
-    begin
-        #5 clk = ~clk; 
-    end
 
     initial 
     begin

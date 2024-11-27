@@ -37,7 +37,6 @@ module zanagotchi
     // Instancia o módulo de controle das imagens para o display
     controlador_imagens IMG
     (
-        .clk(clk),
         .estado(estado),
         .imagem(imagem)
     );
