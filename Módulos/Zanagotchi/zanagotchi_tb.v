@@ -3,9 +3,15 @@
 module zanagotchi_tb ();
 
 reg b1, b2, clk;
-wire [2:0] estado;
+wire [3:0] estado;
 wire [7:0] fome, felicidade, sono;
 wire morreu;
+wire[1024*8-1:0] imagem;
+wire io_sclk;
+wire io_sdin;
+wire io_cs;
+wire io_dc;
+wire io_reset;
 
 zanagotchi DUT 
 (
@@ -26,16 +32,28 @@ begin
 end
 
 integer i;
+integer file;
 
 initial 
 begin
+
     // Inicializa os sinais
-    $display("Inicializando o sistema...");
+    $display("\n\nInicializando Zanagotchi...");
     b1 = 0;
     b2 = 0;
     #10;
-    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d \nMORREU: %b\n", DUT.EST.estado, DUT.ATR.fome, DUT.ATR.sono, DUT.ATR.felicidade, DUT.ATR.morreu);
+    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d \nMORREU: %b", DUT.EST.estado, DUT.ATR.fome, DUT.ATR.sono, DUT.ATR.felicidade, DUT.ATR.morreu);
+    
+    file = $fopen("../Imagens/LogImagens/zanagotchi_idle1.hex", "w");
 
+    // Imagem do estado
+    for (integer i = 0; i < 1023; i = i + 1)
+        $fwrite(file, "%02x ", DUT.IMG.imagem[i*8 +: 8]);
+    $fwrite(file, "%02x", DUT.IMG.imagem[1023*8 +: 8]);  // Último byte sem espaço
+    
+    $fclose(file);
+    $display("Imagem escrita em /Imagens/LogImagens/zanagotchi_idle1.hex\n");
+    
     // Espera 3 segundos
     #3000;
     $display("3 segundos depois...");
@@ -48,7 +66,22 @@ begin
     b1 = 1;
     b2 = 0;
     #10;
-    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d \nMORREU: %b\n", DUT.EST.estado, DUT.ATR.fome, DUT.ATR.sono, DUT.ATR.felicidade, DUT.ATR.morreu);
+    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d \nMORREU: %b", DUT.EST.estado, DUT.ATR.fome, DUT.ATR.sono, DUT.ATR.felicidade, DUT.ATR.morreu);
+
+    // Solta botões
+    b1 = 0;
+    b2 = 0;
+    #10;
+
+    file = $fopen("../Imagens/LogImagens/zanagotchi_comendo1.hex", "w");
+
+    // Imagem do estado
+    for (integer i = 0; i < 1023; i = i + 1)
+        $fwrite(file, "%02x ", DUT.IMG.imagem[i*8 +: 8]);
+    $fwrite(file, "%02x", DUT.IMG.imagem[1023*8 +: 8]);  // Último byte sem espaço
+    
+    $fclose(file);
+    $display("Imagem escrita em /Imagens/LogImagens/zanagotchi_comendo1.hex\n");
 
     // Mantendo no estado COMENDO e verificando a fome subir
     $display("Mantendo no estado COMENDO e verificando a fome subir");
@@ -73,6 +106,21 @@ begin
     #10;
     $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d \nMORREU: %b\n", DUT.EST.estado, DUT.ATR.fome, DUT.ATR.sono, DUT.ATR.felicidade, DUT.ATR.morreu);
 
+    // Solta botões
+    b1 = 0;
+    b2 = 0;
+    #10;
+
+    file = $fopen("../Imagens/LogImagens/zanagotchi_dormindo1.hex", "w");
+
+    // Imagem do estado
+    for (integer i = 0; i < 1023; i = i + 1)
+        $fwrite(file, "%02x ", DUT.IMG.imagem[i*8 +: 8]);
+    $fwrite(file, "%02x", DUT.IMG.imagem[1023*8 +: 8]);  // Último byte sem espaço
+    
+    $fclose(file);
+    $display("Imagem escrita em /Imagens/LogImagens/zanagotchi_dormindo1.hex\n");
+
     // Mantendo no estado DORMINDO e verificando o sono subir
     $display("Mantendo no estado DORMINDO e verificando o sono subir");
     for (i = 0; i < 3; i = i + 1)
@@ -94,7 +142,22 @@ begin
     b1 = 1;
     b2 = 1;
     #10;
-    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d \nMORREU: %b\n", DUT.EST.estado, DUT.ATR.fome, DUT.ATR.sono, DUT.ATR.felicidade, DUT.ATR.morreu);
+    $display("ESTADO: %b \nFO|SO|FE: %d|%d|%d \nMORREU: %b", DUT.EST.estado, DUT.ATR.fome, DUT.ATR.sono, DUT.ATR.felicidade, DUT.ATR.morreu);
+
+    // Solta botões
+    b1 = 0;
+    b2 = 0;
+    #10;
+
+    file = $fopen("../Imagens/LogImagens/zanagotchi_dando_aula1.hex", "w");
+
+    // Imagem do estado
+    for (integer i = 0; i < 1023; i = i + 1)
+        $fwrite(file, "%02x ", DUT.IMG.imagem[i*8 +: 8]);
+    $fwrite(file, "%02x", DUT.IMG.imagem[1023*8 +: 8]);  // Último byte sem espaço
+    
+    $fclose(file);
+    $display("Imagem escrita em /Imagens/LogImagens/zanagotchi_dando_aula1.hex\n");
 
     // Mantendo no estado DANDO_AULA e verificando a felicidade subir
     $display("Mantendo no estado DANDO_AULA e verificando a felicidade subir");
@@ -126,6 +189,17 @@ begin
     end
 
     $display("Morreu depois de %d segundos", i);
+
+    file = $fopen("../Imagens/LogImagens/zanagotchi_morto1.hex", "w");
+
+    // Imagem do estado
+    for (integer i = 0; i < 1023; i = i + 1)
+        $fwrite(file, "%02x ", DUT.IMG.imagem[i*8 +: 8]);
+    $fwrite(file, "%02x", DUT.IMG.imagem[1023*8 +: 8]);  // Último byte sem espaço
+    
+    $fclose(file);
+    $display("Imagem escrita em /Imagens/LogImagens/zanagotchi_morto1.hex\n");
+
     $finish;
 end
 
