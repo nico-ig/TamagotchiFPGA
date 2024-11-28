@@ -1,5 +1,6 @@
 module controlador_imagens
 (
+    input wire clk,
     input wire [3:0] estado,
     output wire [1024*8-1:0] imagem
 );
