@@ -4,6 +4,7 @@ module controlador_imagens
     input wire [3:0] estado,
     output wire [1024*8-1:0] imagem
 );
+    integer i, j;
 
     // Estados possíveis
     localparam IDLE = 4'b0000, 
@@ -23,25 +24,25 @@ module controlador_imagens
     // Inicializa a memória
     initial 
     begin
-        $readmemh("../Imagens/hexs/Idle/zanagotchi_idle1.hex", tmp);
-        for (integer i = 0; i < 1024; i = i + 1)
-            for (integer j = 0; j < 8; j = j + 1)
+        $readmemh("./Imagens/hexs/Idle/zanagotchi_idle1.hex", tmp);
+        for (i = 0; i < 1024; i = i + 1)
+            for (j = 0; j < 8; j = j + 1)
                 memoria_idle[0][i*8 + j] = tmp[i][j];
-        $readmemh("../Imagens/hexs/Dormindo/zanagotchi_dormindo1.hex", tmp);
-        for (integer i = 0; i < 1024; i = i + 1)
-            for (integer j = 0; j < 8; j = j + 1)
+        $readmemh("./Imagens/hexs/Dormindo/zanagotchi_dormindo1.hex", tmp);
+        for (i = 0; i < 1024; i = i + 1)
+            for (j = 0; j < 8; j = j + 1)
                 memoria_dormindo[0][i*8 + j] = tmp[i][j];
-        $readmemh("../Imagens/hexs/Comendo/zanagotchi_comendo1.hex", tmp);
-        for (integer i = 0; i < 1024; i = i + 1)
-            for (integer j = 0; j < 8; j = j + 1)
+        $readmemh("./Imagens/hexs/Comendo/zanagotchi_comendo1.hex", tmp);
+        for (i = 0; i < 1024; i = i + 1)
+            for (j = 0; j < 8; j = j + 1)
                 memoria_comendo[0][i*8 + j] = tmp[i][j];
-        $readmemh("../Imagens/hexs/DandoAula/zanagotchi_dando_aula1.hex", tmp);
-        for (integer i = 0; i < 1024; i = i + 1)
-            for (integer j = 0; j < 8; j = j + 1)
+        $readmemh("./Imagens/hexs/DandoAula/zanagotchi_dando_aula1.hex", tmp);
+        for (i = 0; i < 1024; i = i + 1)
+            for (j = 0; j < 8; j = j + 1)
                 memoria_dando_aula[0][i*8 + j] = tmp[i][j];
-        $readmemh("../Imagens/hexs/Morto/zanagotchi_morto1.hex", tmp);
-        for (integer i = 0; i < 1024; i = i + 1) 
-            for (integer j = 0; j < 8; j = j + 1)
+        $readmemh("./Imagens/hexs/Morto/zanagotchi_morto1.hex", tmp);
+        for (i = 0; i < 1024; i = i + 1) 
+            for (j = 0; j < 8; j = j + 1)
                 memoria_morto[0][i*8 + j] = tmp[i][j];
     end
 
