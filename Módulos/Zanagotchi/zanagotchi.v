@@ -12,13 +12,28 @@ module zanagotchi
     wire io_cs;
     wire io_dc;
     wire io_reset;
+    wire b1_aux, b2_aux;
+
+    controlador_botao B1
+    (
+        .b_in(b1),
+        .clk(clk),
+        .b_out(b1_aux)
+    );
+
+    controlador_botao B2
+    (
+        .b_in(b2),
+        .clk(clk),
+        .b_out(b2_aux)
+    );
 
     // Instancia o módulo de controle de estados
     controlador_estados EST
     ( 
         .clk(clk), 
-        .b1(b1), 
-        .b2(b2),
+        .b1(b1_aux), 
+        .b2(b2_aux),
         .morreu(morreu),
         .estado(estado)
     );
