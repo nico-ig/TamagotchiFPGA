@@ -1,7 +1,7 @@
 {
-    "name": "tamagochi",
-    "includedFiles": "all",
-    "testBenches": "all",
-    "top": "controlador_botao",
-    "constraintsFile": "tangnano9k.cst"
+  "name": "tamagochi",
+  "includedFiles": "all",
+  "testBenches": "all",
+  "top": "zanagotchi",
+  "constraintsFile": "tangnano9k.cst"
 }

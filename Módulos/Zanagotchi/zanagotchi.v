@@ -1,24 +1,39 @@
 module zanagotchi
 (
-    input wire b1, b2, clk
+    input wire b1, b2, clk,
+    output wire io_sclk,
+    output wire io_sdin,
+    output wire io_cs,
+    output wire io_dc,
+    output wire io_reset
 );
 
     wire[3:0] estado;
     wire[7:0] fome, felicidade, sono;
-    wire morreu;
+    wire morreu, b1_aux, b2_aux;
     wire[1024*8-1:0] imagem;
-    wire io_sclk;
-    wire io_sdin;
-    wire io_cs;
-    wire io_dc;
-    wire io_reset;
+
+    // Instancia o módulo de controle dos botões
+    controlador_botao B1
+    (
+        .clk(clk),
+        .b_in(b1),
+        .b_out(b1_aux)
+    );
+
+    controlador_botao B2
+    (
+        .clk(clk),
+        .b_in(b2),
+        .b_out(b2_aux)
+    );
 
     // Instancia o módulo de controle de estados
     controlador_estados EST
     ( 
         .clk(clk), 
-        .b1(b1), 
-        .b2(b2),
+        .b1(b1_aux), 
+        .b2(b2_aux),
         .morreu(morreu),
         .estado(estado)
     );

@@ -5,13 +5,13 @@ module controlador_display
   parameter STARTUP_WAIT = 32'd10000000
 )
 (
-    input clk,
-    input [1024*8-1:0] image,
-    output io_sclk,
-    output io_sdin,
-    output io_cs,
-    output io_dc,
-    output io_reset
+    input wire clk,
+    input wire [1024*8-1:0] image,
+    output wire io_sclk,
+    output wire io_sdin,
+    output wire io_cs,
+    output wire io_dc,
+    output wire io_reset
 );
 
   localparam STATE_INIT_POWER = 8'd0;
@@ -73,7 +73,7 @@ module controlador_display
 
     8'hAF   // display on
   };
-  reg [7:0] commandIndex = SETUP_INSTRUCTIONS * 8;
+  reg [7:0] commandIndex = SETUP_INSTRUCTIONS * 4'd8;
 
   assign io_sclk = sclk;
   assign io_sdin = sdin;
@@ -116,7 +116,7 @@ module controlador_display
           if (bitNumber == 0)
             state <= STATE_CHECK_FINISHED_INIT;
           else
-            bitNumber <= bitNumber - 1;
+            bitNumber <= bitNumber - 4'd1;
         end
       end
       STATE_CHECK_FINISHED_INIT: begin
@@ -127,12 +127,12 @@ module controlador_display
             state <= STATE_LOAD_INIT_CMD; 
       end
       STATE_LOAD_DATA: begin
-        cs <= 0;
-        dc <= 1;
+        cs <= 1'd0;
+        dc <= 1'd1;
         bitNumber <= 3'd7;
         state <= STATE_SEND;
-        dataToSend <= image[(pixelCounter+7)-:8'd8];
-        pixelCounter <= pixelCounter + 8;
+        dataToSend <= image[(pixelCounter+4'd8)-:4'd8];
+        pixelCounter <= pixelCounter + 4'd8;
       end
     endcase
   end
