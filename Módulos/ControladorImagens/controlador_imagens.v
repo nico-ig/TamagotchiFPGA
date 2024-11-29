@@ -30,23 +30,23 @@ module controlador_imagens
     initial
     begin
         for (i = 0; i < IDLE_SIZE; i = i + 1) begin
-            $readmemh($sformatf("../Imagens/hexs/Idle/zanagotchi_idle%0d.hex", i + 1), memoria_idle, i*1024, i*1024 + 1023);
+            $readmemh($sformatf("/hexs/Idle/zanagotchi_idle%0d.hex", i + 1), memoria_idle, i*1024, i*1024 + 1023);
         end
 
         for (i = 0; i < DORMINDO_SIZE; i = i + 1) begin
-            $readmemh($sformatf("../Imagens/hexs/Dormindo/zanagotchi_dormindo%0d.hex", i + 1), memoria_dormindo, i*1024, i*1024 + 1023);
+            $readmemh($sformatf("/hexs/Dormindo/zanagotchi_dormindo%0d.hex", i + 1), memoria_dormindo, i*1024, i*1024 + 1023);
         end
 
         for (i = 0; i < COMENDO_SIZE; i = i + 1) begin
-            $readmemh($sformatf("../Imagens/hexs/Comendo/zanagotchi_comendo%0d.hex", i + 1), memoria_comendo, i*1024, i*1024 + 1023);
+            $readmemh($sformatf("/hexs/Comendo/zanagotchi_comendo%0d.hex", i + 1), memoria_comendo, i*1024, i*1024 + 1023);
         end
 
         for (i = 0; i < DANDO_AULA_SIZE; i = i + 1) begin
-            $readmemh($sformatf("../Imagens/hexs/DandoAula/zanagotchi_dando_aula%0d.hex", i + 1), memoria_dando_aula, i*1024, i*1024 + 1023);
+            $readmemh($sformatf("/hexs/DandoAula/zanagotchi_dando_aula%0d.hex", i + 1), memoria_dando_aula, i*1024, i*1024 + 1023);
         end
 
         for (i = 0; i < MORTO_SIZE; i = i + 1) begin
-            $readmemh($sformatf("../Imagens/hexs/Morto/zanagotchi_morto%0d.hex", i + 1), memoria_morto, i*1024, i*1024 + 1023);
+            $readmemh($sformatf("/hexs/Morto/zanagotchi_morto%0d.hex", i + 1), memoria_morto, i*1024, i*1024 + 1023);
         end
     end
 
