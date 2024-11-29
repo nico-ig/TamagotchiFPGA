@@ -35,7 +35,9 @@ module zanagotchi
         .clk(clk), 
         .b1(b1_aux), 
         .b2(b2_aux),
-        .morreu(morreu),
+        .fome(fome), 
+        .felicidade(felicidade), 
+        .sono(sono),
         .estado(estado)
     );
 
@@ -43,11 +45,10 @@ module zanagotchi
     controlador_atributos ATR
     ( 
         .clk(clk), 
-        .estado(estado), 
+        .estado(estado),
         .fome(fome), 
         .felicidade(felicidade), 
         .sono(sono),
-        .morreu(morreu)
     ); 
 
     // Instancia o módulo de controle das imagens para o display

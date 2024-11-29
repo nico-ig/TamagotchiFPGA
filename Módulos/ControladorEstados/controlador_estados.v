@@ -1,9 +1,9 @@
 module controlador_estados
 (
-    input wire b1, b2, clk, morreu,
-    output reg[3:0] estado
+    input wire b1, b2, clk,
+    input wire [7:0] fome, felicidade, sono,
+    output wire[3:0] estado
 );
-
     // Estados possíveis
     localparam IDLE = 4'b0000, 
                DORMINDO = 4'b0001, 
@@ -19,11 +19,13 @@ module controlador_estados
     // Lógica principal
     always @(posedge clk) 
     begin
-        case (estado)
-            IDLE: estado <= b1 && !b2 ? COMENDO :
-                            !b1 && b2 ? DORMINDO :
-                            b1 && b2 ? DANDO_AULA : IDLE;
-            default: estado <= b1 || b2 ? IDLE : estado;
-        endcase
+        if (estado === MORTO || !fome || !sono || !felicidade)
+            estado <= MORTO;
+        else if (estado === IDLE)
+            estado <= b1 && !b2 ? COMENDO :
+                      !b1 && b2 ? DORMINDO :
+                      b1 && b2 ? DANDO_AULA : IDLE;
+        else
+            estado <= b1 || b2 ? IDLE : estado;
     end
 endmodule

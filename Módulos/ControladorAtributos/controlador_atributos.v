@@ -3,47 +3,41 @@ module controlador_atributos
     input wire clk,
     input wire [3:0] estado,
     output reg [7:0] fome, felicidade, sono,
-    output reg morreu
 );
     // ESTADOS
     localparam DORMINDO = 4'b0001,
                COMENDO = 4'b0010,
-               DANDO_AULA = 4'b0100;
+               DANDO_AULA = 4'b0100,
+               MORTO = 4'b1000;
 
     // MAX ATRIBUTOS
-    localparam MAX_FOME = 7'd100,
-               MAX_SONO = 7'd100,
-               MAX_FELICIDADE = 7'd100;
+    localparam MAX_FOME = 8'd100,
+               MAX_SONO = 8'd100,
+               MAX_FELICIDADE = 8'd100;
 
     // Velocidades atributos
-    localparam VEL_DESCIDA = 8'd1,
+    localparam VEL_DESCIDA = 1,
                VEL_SUBIDA = 8'd7;
 
     // Contador para controlar o incremento dos atributos
-    reg [63:0] contador;
+    reg [15:0] contador;
 
     // Estado inicial
     initial 
     begin
-        fome = 7'd80;
-        felicidade = 7'd70;
-        sono = 7'd50;
-        contador = 8'd0;
-        morreu = 1'd0;
+        fome = 8'd80;
+        felicidade = 8'd70;
+        sono = 8'd50;
+        contador = 0;
+        estado = 0;
     end
 
     // Lógica principal
     always @(posedge clk) 
     begin       
-        contador <= contador + 8'd1;
+        contador <= contador + 1;
 
-        if (contador)
-        begin
-            sono <= sono;
-            fome <= fome;
-            felicidade <= felicidade;
-        end
-        else
+        if (!contador)
         begin
             // Incremento/decrementando de atributos
             case(estado)
@@ -54,19 +48,19 @@ module controlador_atributos
                             MAX_SONO;
                     
                     fome <= fome > VEL_DESCIDA ? 
-                        fome - VEL_DESCIDA : 
-                        8'd0;
+                            fome - VEL_DESCIDA : 
+                            0;
 
                     felicidade <= felicidade > VEL_DESCIDA ? 
-                        felicidade - VEL_DESCIDA : 
-                        8'd0;
+                                  felicidade - VEL_DESCIDA : 
+                                  0;
                 end
 
                 COMENDO:
                 begin
-                    fome <= fome > VEL_DESCIDA ? 
-                            fome - VEL_DESCIDA : 
-                            8'd0;
+                    sono <= sono > VEL_DESCIDA ? 
+                            sono - VEL_DESCIDA : 
+                            0;
 
                     fome <= fome < MAX_FOME - VEL_SUBIDA ? 
                             fome + VEL_SUBIDA : 
@@ -74,35 +68,39 @@ module controlador_atributos
 
                     felicidade <= felicidade > VEL_DESCIDA ? 
                                   felicidade - VEL_DESCIDA : 
-                                  8'd0;
+                                  0;
                 end
 
                 DANDO_AULA:
                 begin
-                    sono <= sono;
-                    fome <= fome;
+                    sono <= sono > VEL_DESCIDA ? 
+                            sono - VEL_DESCIDA : 
+                            0;
+
+                    fome <= fome > VEL_DESCIDA ? 
+                            fome - VEL_DESCIDA : 
+                            0;
+
                     felicidade <= felicidade < MAX_FELICIDADE - VEL_SUBIDA ? 
                                   felicidade + VEL_SUBIDA : 
                                   MAX_FELICIDADE;
                 end           
+
                 default:
                 begin
-                    fome <= fome > VEL_DESCIDA ? 
-                        fome - VEL_DESCIDA : 
-                        8'd0;
-
                     sono <= sono > VEL_DESCIDA ? 
-                        sono - VEL_DESCIDA : 
-                        8'd0;
+                            sono - VEL_DESCIDA : 
+                            0;
+
+                    fome <= fome > VEL_DESCIDA ? 
+                            fome - VEL_DESCIDA : 
+                            0;
 
                     felicidade <= felicidade > VEL_DESCIDA ? 
-                            felicidade - VEL_DESCIDA : 
-                            8'd0;
+                                  felicidade - VEL_DESCIDA : 
+                                  0;
                 end
             endcase
-
-            // Verificação pra ver se morreu
-            morreu <= morreu || fome <= 8'd10 || sono <= 8'd10 || felicidade <= 8'd10;
         end
     end
 endmodule
