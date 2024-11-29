@@ -19,53 +19,11 @@ module controlador_estados
     // Lógica principal
     always @(posedge clk) 
     begin
-
-        // Verificação pra ver se morreu
-        // if (morreu == 1)
-        //     estado <=  MORTO;
-        // else
-        begin
-            // Controle de estados
-            case (estado)
-                IDLE: 
-                begin
-                    if (b1 && !b2)
-                        estado <= COMENDO;
-                    else if (b2 && !b1)
-                        estado <= DORMINDO;
-                    else if (b1 && b2)
-                        estado <= DANDO_AULA;
-                    else
-                        estado <= IDLE;
-                end
-                DORMINDO: 
-                begin
-                    if (b2)
-                        estado <= IDLE;
-                    else
-                        estado <= DORMINDO;
-                        
-                end
-                COMENDO: 
-                begin
-                    if (b1)
-                        estado <= IDLE;
-                    else
-                        estado <= COMENDO;
-                end
-                DANDO_AULA: 
-                begin
-                    if (b1 && b2)
-                        estado <= IDLE;
-                    else
-                        estado <= DANDO_AULA;
-                end
-                MORTO: 
-                begin
-                    estado <= MORTO;
-                end
-                default: estado <= estado;
-            endcase
-        end
+        case (estado)
+            IDLE: estado <= b1 && !b2 ? COMENDO :
+                            !b1 && b2 ? DORMINDO :
+                            b1 && b2 ? DANDO_AULA : IDLE;
+            default: estado <= b1 || b2 ? IDLE : estado;
+        endcase
     end
 endmodule
