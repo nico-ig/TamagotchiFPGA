@@ -12,10 +12,10 @@ always @ (posedge clk)
 begin
     counter <= !b_in ?
                counter ?
-               counter + 1 :
-               0 :
-               1;
+               counter + 6'b1 :
+               6'b0 :
+               6'b1;
 
-    b_out <= b_in || (counter > 0);
+    b_out <= b_in || (counter > 6'b0);
 end
 endmodule

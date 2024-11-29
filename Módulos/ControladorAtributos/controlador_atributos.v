@@ -20,7 +20,7 @@ module controlador_atributos
                VEL_SUBIDA = 8'd7;
 
     // Contador para controlar o incremento dos atributos
-    reg [7:0] contador;
+    reg [2047:0] contador;
 
     // Estado inicial
     initial 
@@ -29,13 +29,13 @@ module controlador_atributos
         felicidade = 7'd70;
         sono = 7'd50;
         contador = 8'd0;
-        morreu = 0;
+        morreu = 1'd0;
     end
 
     // Lógica principal
     always @(posedge clk) 
     begin       
-        contador <= contador + 1;
+        contador <= contador + 8'd1;
 
         if (contador)
         begin
@@ -55,18 +55,18 @@ module controlador_atributos
                     
                     fome <= fome > VEL_DESCIDA ? 
                         fome - VEL_DESCIDA : 
-                        0;
+                        8'd0;
 
                     felicidade <= felicidade > VEL_DESCIDA ? 
                         felicidade - VEL_DESCIDA : 
-                        0;
+                        8'd0;
                 end
 
                 COMENDO:
                 begin
                     fome <= fome > VEL_DESCIDA ? 
                             fome - VEL_DESCIDA : 
-                            0;
+                            8'd0;
 
                     fome <= fome < MAX_FOME - VEL_SUBIDA ? 
                             fome + VEL_SUBIDA : 
@@ -74,7 +74,7 @@ module controlador_atributos
 
                     felicidade <= felicidade > VEL_DESCIDA ? 
                                   felicidade - VEL_DESCIDA : 
-                                  0;
+                                  8'd0;
                 end
 
                 DANDO_AULA:
@@ -89,20 +89,20 @@ module controlador_atributos
                 begin
                     fome <= fome > VEL_DESCIDA ? 
                         fome - VEL_DESCIDA : 
-                        0;
+                        8'd0;
 
                     sono <= sono > VEL_DESCIDA ? 
                         sono - VEL_DESCIDA : 
-                        0;
+                        8'd0;
 
                     felicidade <= felicidade > VEL_DESCIDA ? 
                             felicidade - VEL_DESCIDA : 
-                            0;
+                            8'd0;
                 end
             endcase
 
             // Verificação pra ver se morreu
-            morreu <= morreu || fome <= 10 || sono <= 10 || felicidade <= 10;
+            morreu <= morreu || fome <= 8'd10 || sono <= 8'd10 || felicidade <= 8'd10;
         end
     end
 endmodule
