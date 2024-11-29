@@ -4,7 +4,7 @@ module controlador_botao
     output reg b_out
 );
 
-reg [5:0] counter = 0;
+reg [63:0] counter = 0;
 
 initial b_out = 0;
 

@@ -20,7 +20,7 @@ module controlador_atributos
                VEL_SUBIDA = 8'd7;
 
     // Contador para controlar o incremento dos atributos
-    reg [2047:0] contador;
+    reg [63:0] contador;
 
     // Estado inicial
     initial 
