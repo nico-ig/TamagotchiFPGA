@@ -21,9 +21,9 @@ module controlador_estados
     begin
 
         // Verificação pra ver se morreu
-        if (morreu == 1)
-            estado <=  MORTO;
-        else
+        // if (morreu == 1)
+        //     estado <=  MORTO;
+        // else
         begin
             // Controle de estados
             case (estado)

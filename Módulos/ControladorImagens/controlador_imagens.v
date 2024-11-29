@@ -55,7 +55,15 @@ module controlador_imagens
     // Atualização de imagens baseada no estado
     always @(posedge clk) 
     begin
-        data_to_send <= memoria_comendo[byte_counter];
+        case (estado)
+            IDLE: data_to_send <= memoria_idle[byte_counter];
+            DORMINDO: data_to_send <= memoria_dormindo[byte_counter];
+            COMENDO: data_to_send <= memoria_comendo[byte_counter];
+            DANDO_AULA: data_to_send <= memoria_dando_aula[byte_counter];
+            MORTO: data_to_send <= memoria_morto[byte_counter];
+            default: data_to_send <= memoria_idle[byte_counter];
+        endcase
+        
     end
 
 endmodule
