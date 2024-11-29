@@ -4,7 +4,7 @@ module controlador_botao
     output reg b_out
 );
 
-reg [15:0] counter_low = 0, counter_high = 0;
+reg [15:0] counter_low = 0, counter_high = 1;
 
 initial b_out = 0;
 
@@ -15,9 +15,11 @@ begin
                    16'b1;
 
     counter_high <= b_in || counter_low ? 
-                    counter_high + 16'b1 : 
-                    16'b0;
+                    counter_high ? 
+                        counter_high + 16'b1 : 
+                        16'b0 :
+                    16'b1;
 
-    b_out <= (b_in || counter_low) && !counter_high;
+    b_out <= !counter_high;
 end
 endmodule
