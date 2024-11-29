@@ -1,9 +1,11 @@
 module controlador_imagens
 (
     input wire clk,
+    input wire [9:0] byte_counter,
     input wire [3:0] estado,
-    output reg [1024*8-1:0] imagem
+    output reg [7:0] data_to_send,
 );
+
     integer i;
 
     // Estados possíveis
@@ -30,59 +32,30 @@ module controlador_imagens
     initial
     begin
         for (i = 0; i < IDLE_SIZE; i = i + 1) begin
-            $readmemh($sformatf("/hexs/Idle/zanagotchi_idle%0d.hex", i + 1), memoria_idle, i*1024, i*1024 + 1023);
+            $readmemh($sformatf("hexs/Idle/zanagotchi_idle%0d.hex", i + 1), memoria_idle, i*1024, i*1024 + 1023);
         end
 
         for (i = 0; i < DORMINDO_SIZE; i = i + 1) begin
-            $readmemh($sformatf("/hexs/Dormindo/zanagotchi_dormindo%0d.hex", i + 1), memoria_dormindo, i*1024, i*1024 + 1023);
+            $readmemh($sformatf("hexs/Dormindo/zanagotchi_dormindo%0d.hex", i + 1), memoria_dormindo, i*1024, i*1024 + 1023);
         end
 
         for (i = 0; i < COMENDO_SIZE; i = i + 1) begin
-            $readmemh($sformatf("/hexs/Comendo/zanagotchi_comendo%0d.hex", i + 1), memoria_comendo, i*1024, i*1024 + 1023);
+            $readmemh($sformatf("hexs/Comendo/zanagotchi_comendo%0d.hex", i + 1), memoria_comendo, i*1024, i*1024 + 1023);
         end
 
         for (i = 0; i < DANDO_AULA_SIZE; i = i + 1) begin
-            $readmemh($sformatf("/hexs/DandoAula/zanagotchi_dando_aula%0d.hex", i + 1), memoria_dando_aula, i*1024, i*1024 + 1023);
+            $readmemh($sformatf("hexs/DandoAula/zanagotchi_dando_aula%0d.hex", i + 1), memoria_dando_aula, i*1024, i*1024 + 1023);
         end
 
         for (i = 0; i < MORTO_SIZE; i = i + 1) begin
-            $readmemh($sformatf("/hexs/Morto/zanagotchi_morto%0d.hex", i + 1), memoria_morto, i*1024, i*1024 + 1023);
+            $readmemh($sformatf("hexs/Morto/zanagotchi_morto%0d.hex", i + 1), memoria_morto, i*1024, i*1024 + 1023);
         end
     end
 
     // Atualização de imagens baseada no estado
     always @(posedge clk) 
-    begin : ImagensBlock
-
-        // Copia a imagem para a saida
-        case (estado)
-            IDLE: 
-            begin
-                for (i = 0; i < 1024; i = i + 1)
-                    imagem[i*8 +: 8] <= memoria_idle[i];
-            end
-            DORMINDO:
-            begin
-                for (i = 0; i < 1024; i = i + 1)
-                    imagem[i*8 +: 8] <= memoria_dormindo[i];
-            end
-            COMENDO: 
-            begin
-                for (i = 0; i < 1024; i = i + 1)
-                    imagem[i*8 +: 8] <= memoria_comendo[i];
-            end
-            DANDO_AULA: 
-            begin
-                for (i = 0; i < 1024; i = i + 1)
-                    imagem[i*8 +: 8] <= memoria_dando_aula[i];
-            end
-            MORTO: 
-            begin
-                for (i = 0; i < 1024; i = i + 1)
-                    imagem[i*8 +: 8] <= memoria_morto[i];
-            end
-            default: imagem <= imagem;
-        endcase
+    begin
+        data_to_send <= memoria_comendo[byte_counter];
     end
 
 endmodule

@@ -11,7 +11,8 @@ module zanagotchi
     wire[3:0] estado;
     wire[7:0] fome, felicidade, sono;
     wire morreu, b1_aux, b2_aux;
-    wire[1024*8-1:0] imagem;
+    wire[7:0] data_to_send;
+    wire[9:0] byte_counter;
 
     // Instancia o módulo de controle dos botões
     controlador_botao B1
@@ -54,14 +55,16 @@ module zanagotchi
     (
         .clk(clk),
         .estado(estado),
-        .imagem(imagem)
+        .byte_counter(byte_counter),
+        .data_to_send(data_to_send)
     );
     
     // Instancia o módulo que joga a imagem recebida para o display
     controlador_display DIS
     (
         .clk(clk),
-        .image(imagem),
+        .data_to_send(data_to_send),
+        .byte_counter(byte_counter),
         .io_sclk(io_sclk),
         .io_sdin(io_sdin),
         .io_cs(io_cs),

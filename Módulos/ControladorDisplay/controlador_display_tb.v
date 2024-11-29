@@ -3,15 +3,15 @@
 module test();
   reg clk = 0;
   reg [1:0] should_end = 0;
-  reg [7:0] image[0:1023];
-  reg [1024*8-1:0] image_array = 0;
+  reg [7:0] image[1024:0];
+  reg [7:0] data_to_send;
   reg [2:0] page = 0, previous_state = 0;
   reg [6:0] column = 127;
   wire io_sclk, io_sdin, io_dc, io_reset, io_cs;
 
   controlador_display #(11'b10) DUT (
       .clk(clk),
-      .image(image_array),
+      .data_to_send(data_to_send),
       .io_sclk(io_sclk),
       .io_sdin(io_sdin),
       .io_cs(io_cs),
@@ -24,11 +24,6 @@ module test();
     $readmemh("image.hex", image, 0, 1023);
     $dumpfile("controlador_display.vcd");
     $dumpvars(0,test);
-  end
-
-  initial begin
-    for (integer i = 0; i < 1024; i = i + 1)
-      image_array = image_array | image[i] << (i * 8);
   end
 
   always

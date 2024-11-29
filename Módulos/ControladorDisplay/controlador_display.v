@@ -6,7 +6,8 @@ module controlador_display
 )
 (
     input wire clk,
-    input wire [1024*8-1:0] image,
+    input wire [7:0] data_to_send,
+    output reg [9:0] byte_counter,
     output wire io_sclk,
     output wire io_sdin,
     output wire io_cs,
@@ -31,7 +32,6 @@ module controlador_display
 
   reg [7:0] dataToSend = 0;
   reg [3:0] bitNumber = 0;  
-  reg [12:0] pixelCounter = 0;
 
   localparam SETUP_INSTRUCTIONS = 23;
   reg [(SETUP_INSTRUCTIONS*8)-1:0] startupCommands = {
@@ -85,6 +85,7 @@ module controlador_display
     case (state)
       STATE_INIT_POWER: begin
         counter <= counter + 1;
+        byte_counter <= 0;
         if (counter < STARTUP_WAIT)
           reset <= 1;
         else if (counter < STARTUP_WAIT * 2)
@@ -130,9 +131,9 @@ module controlador_display
         cs <= 1'd0;
         dc <= 1'd1;
         bitNumber <= 3'd7;
+        dataToSend <= data_to_send;
         state <= STATE_SEND;
-        dataToSend <= image[(pixelCounter+4'd8)-:4'd8];
-        pixelCounter <= pixelCounter + 4'd8;
+        byte_counter = byte_counter + 1;
       end
     endcase
   end
