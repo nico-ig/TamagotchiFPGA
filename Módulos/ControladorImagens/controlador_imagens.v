@@ -111,13 +111,13 @@ module controlador_imagens
                 comendo_counter <= comendo_counter + 3'd1;
 
                 if (comendo_counter == 0) 
-                    i_comendo <= 0;
+                    i_comendo <= 4;
                 else if (comendo_counter == 1)
-                    i_comendo <= 1;
+                    i_comendo <= 4;
                 else if (comendo_counter == 7) 
                     i_comendo <= 4;
                 else if (comendo_counter % 2 == 0)
-                    i_comendo <= 2;
+                    i_comendo <= 4;
                 else 
                     i_comendo <= 3;
 
@@ -126,7 +126,7 @@ module controlador_imagens
             end
             DANDO_AULA: begin
                 //RANDOMIZAR O FRAME
-                i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
+                i_dando_aula <= 7;
 
                 idle_counter <= 0;
                 incrementa <= 1;
