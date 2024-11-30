@@ -72,16 +72,59 @@ module controlador_imagens
     end
 
     reg [22:0] frame_counter = 23'd1;
-    reg [7:0] i_idle = 0;
-    reg [7:0] i_dormindo = 0;
-    reg [7:0] i_comendo = 0;
-    reg [7:0] i_dando_aula = 0;
-    reg [7:0] i_morto = 0;
+   
+    reg [2:0] i_idle = 0;
+    reg [2:0] i_dormindo = 0;
+    reg [2:0] i_comendo = 0;
+    reg [2:0] i_dando_aula = 0;
+    reg [2:0] i_morto = 0;
+
+    reg [2:0] comendo_counter = 0;
+    reg [2:0] idle_counter = 0;
+
+    reg incrementa = 1;
 
     always @(posedge clk) begin 
         frame_counter <= frame_counter + 23'd1;
         if (frame_counter == 0) begin
+
+            if (estado == IDLE) begin 
+                if (incrementa) begin
+                    idle_counter <= idle_counter + 1;
+                    if (idle_counter == 5)
+                        incrementa <= 0;
+                end else begin
+                    idle_counter <= idle_counter - 1;
+                    if (idle_counter == 0)
+                        incrementa <= 1;
+                end 
+            end else 
+                idle_counter <= 0;
+                incrementa <= 1;
+
+            i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
+
+            if (estado == COMENDO) begin 
+                comendo_counter <= comendo_counter + 1;
+
+                if (comendo_counter == 0) 
+                    i_comendo <= 0;
+                else if (comendo_counter == 1)
+                    i_comendo <= 1;
+                else if (comendo_counter == 7) 
+                    i_comendo <= 4;
+                else if (comendo_counter % 2 == 0)
+                    i_comendo <= 2;
+                else 
+                    i_comendo <= 3;
+            end else
+                comendo_counter <= 0;
+            
+            //RANDOMIZAR OS FRAMES PARA FICAR MAIS NATURAL
             i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
+
+            //RANDOMIZAR O TROVAO
+            i_morto <= (i_morto + 1) % (MORTO_SIZE - 1);
         end
     end
 
@@ -282,7 +325,7 @@ module controlador_imagens
         begin
 
             case (estado)
-                IDLE: data_to_send <= memoria_idle[i_idle*1024 + byte_counter];
+                IDLE: data_to_send <= memoria_idle[i_idle*1024 + byte_counter + 8 * (idle_counter - 3'd3) * (byte_counter > 260)];
                 DORMINDO: data_to_send <= memoria_dormindo[i_dormindo*1024 + byte_counter];
                 COMENDO: data_to_send <= memoria_comendo[i_comendo*1024 + byte_counter];
                 DANDO_AULA: data_to_send <= memoria_dando_aula[i_dando_aula*1024 + byte_counter];
