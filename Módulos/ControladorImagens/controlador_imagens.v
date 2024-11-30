@@ -38,34 +38,34 @@ module controlador_imagens
         $readmemh("hexs/Idle/zanagotchi_idle1.hex", memoria_idle, 0, 1023);
         $readmemh("hexs/Idle/zanagotchi_idle2.hex", memoria_idle, 1024, 2047);
         $readmemh("hexs/Idle/zanagotchi_idle3.hex", memoria_idle, 2048, 3071);
-        $readmemh("hexs/Idle/zanagotchi_idle4.hex", memoria_idle, 3072, 4094);
-        $readmemh("hexs/Idle/zanagotchi_idle5.hex", memoria_idle, 4095, 5119);
+        $readmemh("hexs/Idle/zanagotchi_idle4.hex", memoria_idle, 3072, 4095);
+        $readmemh("hexs/Idle/zanagotchi_idle5.hex", memoria_idle, 4096, 5119);
         $readmemh("hexs/Idle/zanagotchi_idle6.hex", memoria_idle, 5120, 6143);
 
         $readmemh("hexs/Dormindo/zanagotchi_dormindo1.hex", memoria_dormindo, 0, 1023);
         $readmemh("hexs/Dormindo/zanagotchi_dormindo2.hex", memoria_dormindo, 1024, 2047);
         $readmemh("hexs/Dormindo/zanagotchi_dormindo3.hex", memoria_dormindo, 2048, 3071);
-        $readmemh("hexs/Dormindo/zanagotchi_dormindo4.hex", memoria_dormindo, 3072, 4094);
+        $readmemh("hexs/Dormindo/zanagotchi_dormindo4.hex", memoria_dormindo, 3072, 4095);
 
         $readmemh("hexs/Comendo/zanagotchi_comendo1.hex", memoria_comendo, 0, 1023);
         $readmemh("hexs/Comendo/zanagotchi_comendo2.hex", memoria_comendo, 1024, 2047);
         $readmemh("hexs/Comendo/zanagotchi_comendo3.hex", memoria_comendo, 2048, 3071);
-        $readmemh("hexs/Comendo/zanagotchi_comendo4.hex", memoria_comendo, 3072, 4094);
-        $readmemh("hexs/Comendo/zanagotchi_comendo5.hex", memoria_comendo, 4095, 5119);
+        $readmemh("hexs/Comendo/zanagotchi_comendo4.hex", memoria_comendo, 3072, 4095);
+        $readmemh("hexs/Comendo/zanagotchi_comendo5.hex", memoria_comendo, 4096, 5119);
 
         $readmemh("hexs/DandoAula/zanagotchi_dando_aula1.hex", memoria_dando_aula, 0, 1023);
         $readmemh("hexs/DandoAula/zanagotchi_dando_aula2.hex", memoria_dando_aula, 1024, 2047);
         $readmemh("hexs/DandoAula/zanagotchi_dando_aula3.hex", memoria_dando_aula, 2048, 3071);
-        $readmemh("hexs/DandoAula/zanagotchi_dando_aula4.hex", memoria_dando_aula, 3072, 4094);
-        $readmemh("hexs/DandoAula/zanagotchi_dando_aula5.hex", memoria_dando_aula, 4095, 5119);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula4.hex", memoria_dando_aula, 3072, 4095);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula5.hex", memoria_dando_aula, 4096, 5119);
         $readmemh("hexs/DandoAula/zanagotchi_dando_aula6.hex", memoria_dando_aula, 5120, 6143);
         $readmemh("hexs/DandoAula/zanagotchi_dando_aula7.hex", memoria_dando_aula, 6144, 7167);
 
         $readmemh("hexs/Morto/zanagotchi_morto1.hex", memoria_morto, 0, 1023);
         $readmemh("hexs/Morto/zanagotchi_morto2.hex", memoria_morto, 1024, 2047);
-        $readmemh("hexs/Morto/zanagotchi_morto3.hex", memoria_morto, 2048, 30);
-        $readmemh("hexs/Morto/zanagotchi_morto4.hex", memoria_morto, 0, 1023);
-        $readmemh("hexs/Morto/zanagotchi_morto5.hex", memoria_morto, 4095, 5119);
+        $readmemh("hexs/Morto/zanagotchi_morto3.hex", memoria_morto, 2048, 3071);
+        $readmemh("hexs/Morto/zanagotchi_morto4.hex", memoria_morto, 3072, 4095);
+        $readmemh("hexs/Morto/zanagotchi_morto5.hex", memoria_morto, 4096, 5119);
         $readmemh("hexs/Morto/zanagotchi_morto6.hex", memoria_morto, 5120, 6143);
         $readmemh("hexs/Morto/zanagotchi_morto7.hex", memoria_morto, 6144, 7167);
         $readmemh("hexs/Morto/zanagotchi_morto8.hex", memoria_morto, 7168, 8191);
@@ -79,7 +79,7 @@ module controlador_imagens
     reg [7:0] i_morto = 0;
 
     always @(posedge clk) begin 
-        frame_counter <= frame_counter + 1;
+        frame_counter <= frame_counter + 11'd1;
         if (frame_counter == 0) begin
             i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
         end
