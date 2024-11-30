@@ -88,7 +88,8 @@ module controlador_imagens
         frame_counter <= frame_counter + 23'd1;
         if (frame_counter == 0) begin
 
-            if (estado == IDLE) begin 
+            case (estado) 
+            IDLE: begin 
                 if (incrementa) begin
                     idle_counter <= idle_counter + 3'd1;
                     if (idle_counter == 5)
@@ -98,41 +99,47 @@ module controlador_imagens
                     if (idle_counter == 0)
                         incrementa <= 1;
                 end 
-            end else 
+
+                comendo_counter <= 0;
+            end
+            DORMINDO: begin
+                i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
+
                 idle_counter <= 0;
                 incrementa <= 1;
-
-            i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
-
-            if (estado == COMENDO) begin 
+            end
+            COMENDO: begin 
                 comendo_counter <= comendo_counter + 3'd1;
 
                 if (comendo_counter == 0) 
                     i_comendo <= 0;
                 else if (comendo_counter == 1)
                     i_comendo <= 1;
-                else if (comendo_counter  == 2)
-                    i_comendo <= 2;
-                else if (comendo_counter  == 3)
-                    i_comendo <= 3;
-                else if (comendo_counter  == 4)
-                    i_comendo <= 2;
-                else if (comendo_counter  == 5)
-                    i_comendo <= 3;
-                else if (comendo_counter  == 6)
-                    i_comendo <= 2;
                 else if (comendo_counter == 7) 
                     i_comendo <= 4;
+                else if (comendo_counter % 2 == 0)
+                    i_comendo <= 2;
                 else 
                     i_comendo <= 3;
-            end else
-                comendo_counter <= 0;
-            
-            //RANDOMIZAR OS FRAMES PARA FICAR MAIS NATURAL
-            i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
 
-            //RANDOMIZAR O TROVAO
-            i_morto <= (i_morto + 1) % (MORTO_SIZE - 1);
+                idle_counter <= 0;
+                incrementa <= 1;
+            end
+            DANDO_AULA: begin
+                //RANDOMIZAR O FRAME
+                i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
+
+                idle_counter <= 0;
+                incrementa <= 1;
+            end
+            MORTO: begin
+                //RANDOMIZAR O TROVAO
+                i_morto <= (i_morto + 1) % (MORTO_SIZE - 1);
+
+                idle_counter <= 0;
+                incrementa <= 1;
+            end
+            endcase
         end
     end
 
@@ -333,12 +340,12 @@ module controlador_imagens
         begin
 
             case (estado)
-                IDLE: data_to_send <= memoria_idle[i_idle*11'd1024 + byte_counter];
-                DORMINDO: data_to_send <= memoria_dormindo[i_dormindo*11'd1024 + byte_counter];
-                COMENDO: data_to_send <= memoria_comendo[i_comendo*11'd1024 + byte_counter];
-                DANDO_AULA: data_to_send <= memoria_dando_aula[i_dando_aula*11'd1024 + byte_counter];
-                MORTO: data_to_send <= memoria_morto[i_morto*11'd1024 + byte_counter];
-                default: data_to_send <= memoria_idle[i_idle*11'd1024 + byte_counter];
+                IDLE: data_to_send <= memoria_idle[i_idle*12'd1024 + byte_counter + 4'd8 * (idle_counter - 3'd3) * (byte_counter > 9'd260)];
+                DORMINDO: data_to_send <= memoria_dormindo[i_dormindo*12'd1024 + byte_counter];
+                COMENDO: data_to_send <= memoria_comendo[i_comendo*12'd1024 + byte_counter];
+                DANDO_AULA: data_to_send <= memoria_dando_aula[i_dando_aula*12'd1024 + byte_counter];
+                MORTO: data_to_send <= memoria_morto[i_morto*12'd1024 + byte_counter];
+                default: data_to_send <= memoria_idle[i_idle*12'd1024 + byte_counter];
             endcase
         end 
     end
