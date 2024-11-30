@@ -11,6 +11,7 @@ module controlador_estados
                DANDO_AULA = 4'b0100,
                MORTO = 4'b1000;
 
+    reg b1_reg, b2_reg;
     reg [15:0] counter = 16'b1;
 
     initial
