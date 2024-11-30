@@ -11,8 +11,7 @@ module controlador_estados
                DANDO_AULA = 4'b0100,
                MORTO = 4'b1000;
 
-    reg b1_aux = 0, b2_aux = 0;
-    reg [15:0] counter = 1;
+    reg [15:0] counter = 16'b1;
 
     initial
     begin
@@ -22,17 +21,23 @@ module controlador_estados
     // Lógica principal
     always @(posedge clk) 
     begin
-        if (estado === MORTO || !fome || !sono || !felicidade)
-            estado <= MORTO;
-        else if (estado === IDLE)
-            estado <= b1_aux && !b2_aux ? COMENDO :
-                      !b1_aux && b2_aux ? DORMINDO :
-                      b1_aux && b2_aux ? DANDO_AULA : IDLE;
-        else
-            estado <= b1_aux || b2_aux ? IDLE : estado;
+        if (!counter)
+        begin
+            if (estado === MORTO || !fome || !sono || !felicidade)
+                estado <= MORTO;
 
-        b1_aux <= counter ? b1_aux : b1;
-        b2_aux <= counter ? b2_aux : b2;
+            else if (estado === IDLE)
+            begin
+                estado <= b1_reg && !b2_reg ? COMENDO :
+                          !b1_reg && b2_reg ? DORMINDO :
+                          b1_reg && b2_reg ? DANDO_AULA : IDLE;
+            end
+            else
+                estado <= b1_reg || b2_reg ? IDLE : estado;
+        end
+
+        b1_reg <= (b1_reg | b1) && counter;
+        b2_reg <= (b2_reg | b2) && counter;
 
         counter <= counter + 16'b1;
     end
