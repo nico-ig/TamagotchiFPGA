@@ -8,8 +8,6 @@ module controlador_imagens
 
     reg [7:0] felicidade, fome, sono;
 
-    integer i;
-
     // Estados possíveis
     localparam IDLE = 4'b0000, 
                DORMINDO = 4'b0001, 
@@ -17,11 +15,11 @@ module controlador_imagens
                DANDO_AULA = 4'b0100,
                MORTO = 4'b1000;
 
-    localparam IDLE_SIZE = 1,
-               DORMINDO_SIZE = 1,
-               COMENDO_SIZE = 1,
-               DANDO_AULA_SIZE = 1,
-               MORTO_SIZE = 1;
+    localparam IDLE_SIZE = 6,
+               DORMINDO_SIZE = 4,
+               COMENDO_SIZE = 5,
+               DANDO_AULA_SIZE = 7,
+               MORTO_SIZE = 8;
 
     // Memória para armazenar todas as imagens inicialmente
     reg[7:0] memoria_idle [0:IDLE_SIZE*1023];
@@ -38,10 +36,53 @@ module controlador_imagens
         sono = 84;
 
         $readmemh("hexs/Idle/zanagotchi_idle1.hex", memoria_idle, 0, 1023);
+        $readmemh("hexs/Idle/zanagotchi_idle2.hex", memoria_idle, 1024, 2047);
+        $readmemh("hexs/Idle/zanagotchi_idle3.hex", memoria_idle, 2048, 3071);
+        $readmemh("hexs/Idle/zanagotchi_idle4.hex", memoria_idle, 3072, 4094);
+        $readmemh("hexs/Idle/zanagotchi_idle5.hex", memoria_idle, 4095, 5119);
+        $readmemh("hexs/Idle/zanagotchi_idle6.hex", memoria_idle, 5120, 6143);
+
         $readmemh("hexs/Dormindo/zanagotchi_dormindo1.hex", memoria_dormindo, 0, 1023);
+        $readmemh("hexs/Dormindo/zanagotchi_dormindo2.hex", memoria_dormindo, 1024, 2047);
+        $readmemh("hexs/Dormindo/zanagotchi_dormindo3.hex", memoria_dormindo, 2048, 3071);
+        $readmemh("hexs/Dormindo/zanagotchi_dormindo4.hex", memoria_dormindo, 3072, 4094);
+
         $readmemh("hexs/Comendo/zanagotchi_comendo1.hex", memoria_comendo, 0, 1023);
+        $readmemh("hexs/Comendo/zanagotchi_comendo2.hex", memoria_comendo, 1024, 2047);
+        $readmemh("hexs/Comendo/zanagotchi_comendo3.hex", memoria_comendo, 2048, 3071);
+        $readmemh("hexs/Comendo/zanagotchi_comendo4.hex", memoria_comendo, 3072, 4094);
+        $readmemh("hexs/Comendo/zanagotchi_comendo5.hex", memoria_comendo, 4095, 5119);
+
         $readmemh("hexs/DandoAula/zanagotchi_dando_aula1.hex", memoria_dando_aula, 0, 1023);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula2.hex", memoria_dando_aula, 1024, 2047);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula3.hex", memoria_dando_aula, 2048, 3071);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula4.hex", memoria_dando_aula, 3072, 4094);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula5.hex", memoria_dando_aula, 4095, 5119);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula6.hex", memoria_dando_aula, 5120, 6143);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula7.hex", memoria_dando_aula, 6144, 7167);
+
         $readmemh("hexs/Morto/zanagotchi_morto1.hex", memoria_morto, 0, 1023);
+        $readmemh("hexs/Morto/zanagotchi_morto2.hex", memoria_morto, 1024, 2047);
+        $readmemh("hexs/Morto/zanagotchi_morto3.hex", memoria_morto, 2048, 30);
+        $readmemh("hexs/Morto/zanagotchi_morto4.hex", memoria_morto, 0, 1023);
+        $readmemh("hexs/Morto/zanagotchi_morto5.hex", memoria_morto, 4095, 5119);
+        $readmemh("hexs/Morto/zanagotchi_morto6.hex", memoria_morto, 5120, 6143);
+        $readmemh("hexs/Morto/zanagotchi_morto7.hex", memoria_morto, 6144, 7167);
+        $readmemh("hexs/Morto/zanagotchi_morto8.hex", memoria_morto, 7168, 8191);
+    end
+
+    reg [10:0] frame_counter = 11'd1;
+    reg [7:0] i_idle = 0;
+    reg [7:0] i_dormindo = 0;
+    reg [7:0] i_comendo = 0;
+    reg [7:0] i_dando_aula = 0;
+    reg [7:0] i_morto = 0;
+
+    always @(posedge clk) begin 
+        frame_counter <= frame_counter + 1;
+        if (frame_counter == 0) begin
+            i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
+        end
     end
 
     // Atualização de imagens baseada no estado
@@ -241,12 +282,12 @@ module controlador_imagens
         begin
 
             case (estado)
-                IDLE: data_to_send <= memoria_idle[byte_counter];
-                DORMINDO: data_to_send <= memoria_dormindo[byte_counter];
-                COMENDO: data_to_send <= memoria_comendo[byte_counter];
-                DANDO_AULA: data_to_send <= memoria_dando_aula[byte_counter];
-                MORTO: data_to_send <= memoria_morto[byte_counter];
-                default: data_to_send <= memoria_idle[byte_counter];
+                IDLE: data_to_send <= memoria_idle[i_idle*1024 + byte_counter];
+                DORMINDO: data_to_send <= memoria_dormindo[i_dormindo*1024 + byte_counter];
+                COMENDO: data_to_send <= memoria_comendo[i_comendo*1024 + byte_counter];
+                DANDO_AULA: data_to_send <= memoria_dando_aula[i_dando_aula*1024 + byte_counter];
+                MORTO: data_to_send <= memoria_morto[i_morto*1024 + byte_counter];
+                default: data_to_send <= memoria_idle[i_idle*1024 + byte_counter];
             endcase
         end 
     end
