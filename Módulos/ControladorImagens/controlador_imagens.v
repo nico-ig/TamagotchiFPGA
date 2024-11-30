@@ -111,10 +111,18 @@ module controlador_imagens
                     i_comendo <= 0;
                 else if (comendo_counter == 1)
                     i_comendo <= 1;
+                else if (comendo_counter  == 2)
+                    i_comendo <= 2;
+                else if (comendo_counter  == 3)
+                    i_comendo <= 3;
+                else if (comendo_counter  == 4)
+                    i_comendo <= 2;
+                else if (comendo_counter  == 5)
+                    i_comendo <= 3;
+                else if (comendo_counter  == 6)
+                    i_comendo <= 2;
                 else if (comendo_counter == 7) 
                     i_comendo <= 4;
-                else if (comendo_counter % 2 == 0)
-                    i_comendo <= 2;
                 else 
                     i_comendo <= 3;
             end else
