@@ -7,7 +7,6 @@ module zanagotchi
     output wire io_dc,
     output wire io_reset
 );
-
     wire[3:0] estado;
     wire[7:0] fome, felicidade, sono;
     wire morreu, b1_aux, b2_aux;
@@ -48,7 +47,7 @@ module zanagotchi
         .estado(estado),
         .fome(fome), 
         .felicidade(felicidade), 
-        .sono(sono),
+        .sono(sono)
     ); 
 
     // Instancia o módulo de controle das imagens para o display

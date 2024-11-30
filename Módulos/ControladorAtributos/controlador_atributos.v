@@ -2,7 +2,7 @@ module controlador_atributos
 (
     input wire clk,
     input wire [3:0] estado,
-    output reg [7:0] fome, felicidade, sono,
+    output reg [7:0] fome, felicidade, sono
 );
     // ESTADOS
     localparam DORMINDO = 4'b0001,
@@ -16,7 +16,7 @@ module controlador_atributos
                MAX_FELICIDADE = 8'd100;
 
     // Velocidades atributos
-    localparam VEL_DESCIDA = 1,
+    localparam VEL_DESCIDA = 8'd1,
                VEL_SUBIDA = 8'd7;
 
     // Contador para controlar o incremento dos atributos
@@ -28,14 +28,13 @@ module controlador_atributos
         fome = 8'd80;
         felicidade = 8'd70;
         sono = 8'd50;
-        contador = 0;
-        estado = 0;
+        contador = 16'b0;
     end
 
     // Lógica principal
     always @(posedge clk) 
     begin       
-        contador <= contador + 1;
+        contador <= contador + 16'b1;
 
         if (!contador)
         begin
@@ -49,18 +48,18 @@ module controlador_atributos
                     
                     fome <= fome > VEL_DESCIDA ? 
                             fome - VEL_DESCIDA : 
-                            0;
+                            8'b0;
 
                     felicidade <= felicidade > VEL_DESCIDA ? 
                                   felicidade - VEL_DESCIDA : 
-                                  0;
+                                  8'b0;
                 end
 
                 COMENDO:
                 begin
                     sono <= sono > VEL_DESCIDA ? 
                             sono - VEL_DESCIDA : 
-                            0;
+                            8'b0;
 
                     fome <= fome < MAX_FOME - VEL_SUBIDA ? 
                             fome + VEL_SUBIDA : 
@@ -68,18 +67,18 @@ module controlador_atributos
 
                     felicidade <= felicidade > VEL_DESCIDA ? 
                                   felicidade - VEL_DESCIDA : 
-                                  0;
+                                  8'b0;
                 end
 
                 DANDO_AULA:
                 begin
                     sono <= sono > VEL_DESCIDA ? 
                             sono - VEL_DESCIDA : 
-                            0;
+                            8'b0;
 
                     fome <= fome > VEL_DESCIDA ? 
                             fome - VEL_DESCIDA : 
-                            0;
+                            8'b0;
 
                     felicidade <= felicidade < MAX_FELICIDADE - VEL_SUBIDA ? 
                                   felicidade + VEL_SUBIDA : 
@@ -90,15 +89,15 @@ module controlador_atributos
                 begin
                     sono <= sono > VEL_DESCIDA ? 
                             sono - VEL_DESCIDA : 
-                            0;
+                            8'b0;
 
                     fome <= fome > VEL_DESCIDA ? 
                             fome - VEL_DESCIDA : 
-                            0;
+                            8'b0;
 
                     felicidade <= felicidade > VEL_DESCIDA ? 
                                   felicidade - VEL_DESCIDA : 
-                                  0;
+                                  8'b0;
                 end
             endcase
         end
