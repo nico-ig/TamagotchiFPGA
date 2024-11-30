@@ -7,7 +7,7 @@ module zanagotchi
     output wire io_dc,
     output wire io_reset
 );
-    wire[3:0] estado;
+    wire[4:0] estado;
     wire[7:0] fome, felicidade, sono;
     wire morreu, b1_aux, b2_aux;
     wire[7:0] data_to_send;

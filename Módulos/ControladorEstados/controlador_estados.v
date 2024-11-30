@@ -2,21 +2,22 @@ module controlador_estados
 (
     input wire b1, b2, clk,
     input wire [7:0] fome, felicidade, sono,
-    output reg[3:0] estado
+    output reg[4:0] estado
 );
     // Estados possíveis
-    localparam IDLE = 4'b0000, 
-               DORMINDO = 4'b0001, 
-               COMENDO = 4'b0010,
-               DANDO_AULA = 4'b0100,
-               MORTO = 4'b1000;
+    localparam INTRO = 5'b00000,
+               IDLE = 5'b00001, 
+               DORMINDO = 5'b00010, 
+               COMENDO = 5'b00100,
+               DANDO_AULA = 5'b01000,
+               MORTO = 5'b10000;
 
     reg b1_reg = 0, b2_reg = 0;
     reg [21:0] counter = 22'b0;
 
     initial
     begin
-        estado = IDLE;
+        estado = INTRO;
     end
 
     // Lógica principal

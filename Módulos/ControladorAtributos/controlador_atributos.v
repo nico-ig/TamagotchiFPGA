@@ -1,14 +1,16 @@
 module controlador_atributos
 (
     input wire clk,
-    input wire [3:0] estado,
+    input wire [4:0] estado,
     output reg [7:0] fome, felicidade, sono
 );
     // ESTADOS
-    localparam DORMINDO = 4'b0001,
-               COMENDO = 4'b0010,
-               DANDO_AULA = 4'b0100,
-               MORTO = 4'b1000;
+    localparam INTRO = 5'b00000,
+               IDLE = 5'b00001, 
+               DORMINDO = 5'b00010, 
+               COMENDO = 5'b00100,
+               DANDO_AULA = 5'b01000,
+               MORTO = 5'b10000;
 
     // MAX ATRIBUTOS
     localparam MAX_FOME = 8'd100,
