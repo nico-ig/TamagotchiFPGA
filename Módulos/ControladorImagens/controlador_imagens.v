@@ -98,7 +98,9 @@ module controlador_imagens
     always @(posedge clk) 
     begin
 
-        if (estado != INTRO)
+        if (estado === INTRO)
+            data_to_send <= memoria_intro[i_intro*1024 + byte_counter];
+        else
         begin
             //==================================== FELICIDADE ====================================
 
@@ -300,8 +302,6 @@ module controlador_imagens
                 endcase
             end 
         end
-        else
-            INTRO: data_to_send <= memoria_intro[i_intro*1024 + byte_counter];
     end
 
 endmodule
