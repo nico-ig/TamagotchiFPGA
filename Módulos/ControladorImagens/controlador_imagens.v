@@ -3,10 +3,11 @@ module controlador_imagens
     input wire clk,
     input wire [9:0] byte_counter,
     input wire [3:0] estado,
+    input wire [7:0] fome, felicidade, sono,
     output reg [7:0] data_to_send
 );
 
-    reg [7:0] felicidade, fome, sono;
+    //reg [7:0] felicidade, fome, sono;
 
     integer i;
 
@@ -33,9 +34,9 @@ module controlador_imagens
     // Inicializa a memória
     initial
     begin
-        felicidade = 34;
-        fome = 22;
-        sono = 84;
+        // felicidade = 34;
+        // fome = 22;
+        // sono = 84;
 
         $readmemh("hexs/Idle/zanagotchi_idle1.hex", memoria_idle, 0, 1023);
         $readmemh("hexs/Dormindo/zanagotchi_dormindo1.hex", memoria_dormindo, 0, 1023);
