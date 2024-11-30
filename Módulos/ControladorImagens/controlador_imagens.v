@@ -71,7 +71,7 @@ module controlador_imagens
         $readmemh("hexs/Morto/zanagotchi_morto8.hex", memoria_morto, 7168, 8191);
     end
 
-    reg [23:0] frame_counter = 24'd1;
+    reg [19:0] frame_counter = 19'd1;
     reg [7:0] i_idle = 0;
     reg [7:0] i_dormindo = 0;
     reg [7:0] i_comendo = 0;
@@ -79,7 +79,7 @@ module controlador_imagens
     reg [7:0] i_morto = 0;
 
     always @(posedge clk) begin 
-        frame_counter <= frame_counter + 24'd1;
+        frame_counter <= frame_counter + 19'd1;
         if (frame_counter == 0) begin
             i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
         end
