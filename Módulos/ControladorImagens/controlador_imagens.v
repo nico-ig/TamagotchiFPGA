@@ -22,11 +22,11 @@ module controlador_imagens
                MORTO_SIZE = 8;
 
     // Memória para armazenar todas as imagens inicialmente
-    reg[7:0] memoria_idle [0:IDLE_SIZE*1023];
-    reg[7:0] memoria_dormindo [0:DORMINDO_SIZE*1023];
-    reg[7:0] memoria_comendo [0:COMENDO_SIZE*1023];
-    reg[7:0] memoria_dando_aula [0:DANDO_AULA_SIZE*1023];
-    reg[7:0] memoria_morto [0:MORTO_SIZE*1023];
+    reg[7:0] memoria_idle [0:IDLE_SIZE*1024 - 1];
+    reg[7:0] memoria_dormindo [0:DORMINDO_SIZE*1024 - 1];
+    reg[7:0] memoria_comendo [0:COMENDO_SIZE*1024 - 1];
+    reg[7:0] memoria_dando_aula [0:DANDO_AULA_SIZE*1024 - 1];
+    reg[7:0] memoria_morto [0:MORTO_SIZE*1024 - 1];
 
     // Inicializa a memória
     initial
