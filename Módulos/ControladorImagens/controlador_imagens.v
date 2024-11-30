@@ -340,7 +340,7 @@ module controlador_imagens
         begin
 
             case (estado)
-                IDLE: data_to_send <= memoria_idle[i_idle*12'd1024 + byte_counter + 4'd8 * (idle_counter - 3'd3) * (byte_counter > 9'd260)];
+                IDLE: data_to_send <= memoria_idle[i_idle*12'd1024 + byte_counter];
                 DORMINDO: data_to_send <= memoria_dormindo[i_dormindo*12'd1024 + byte_counter];
                 COMENDO: data_to_send <= memoria_comendo[i_comendo*12'd1024 + byte_counter];
                 DANDO_AULA: data_to_send <= memoria_dando_aula[i_dando_aula*12'd1024 + byte_counter];
