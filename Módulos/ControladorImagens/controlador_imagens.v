@@ -75,7 +75,7 @@ module controlador_imagens
    
     reg [2:0] i_idle = 0;
     reg [2:0] i_dormindo = 0;
-    reg [2:0] i_comendo = 0;
+    reg [3:0] i_comendo = 0;
     reg [2:0] i_dando_aula = 0;
     reg [2:0] i_morto = 0;
 
@@ -87,7 +87,6 @@ module controlador_imagens
     always @(posedge clk) begin 
         frame_counter <= frame_counter + 23'd1;
         if (frame_counter == 0) begin
-
             case (estado) 
             IDLE: begin 
                 if (incrementa) begin
