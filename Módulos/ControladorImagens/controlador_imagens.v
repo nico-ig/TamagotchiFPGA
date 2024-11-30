@@ -87,12 +87,12 @@ module controlador_imagens
     reg [7:0] i_dando_aula = 0;
     reg [7:0] i_morto = 0;
 
-    always @(posedge clk) begin 
-        frame_counter <= frame_counter + 23'd1;
-        if (frame_counter == 0) begin
-            i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
-        end
-    end
+    // always @(posedge clk) begin 
+    //     frame_counter <= frame_counter + 23'd1;
+    //     if (frame_counter == 0) begin
+    //         i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
+    //     end
+    // end
 
     // Atualização de imagens baseada no estado
     always @(posedge clk) 
