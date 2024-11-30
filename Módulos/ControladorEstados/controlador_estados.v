@@ -2,7 +2,7 @@ module controlador_estados
 (
     input wire b1, b2, clk,
     input wire [7:0] fome, felicidade, sono,
-    output wire[3:0] estado
+    output reg[3:0] estado
 );
     // Estados possíveis
     localparam IDLE = 4'b0000, 

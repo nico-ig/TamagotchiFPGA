@@ -3,7 +3,7 @@ module controlador_imagens
     input wire clk,
     input wire [9:0] byte_counter,
     input wire [3:0] estado,
-    output reg [7:0] data_to_send,
+    output reg [7:0] data_to_send
 );
 
     integer i;
@@ -31,25 +31,11 @@ module controlador_imagens
     // Inicializa a memória
     initial
     begin
-        for (i = 0; i < IDLE_SIZE; i = i + 1) begin
-            $readmemh($sformatf("hexs/Idle/zanagotchi_idle%0d.hex", i + 1), memoria_idle, i*1024, i*1024 + 1023);
-        end
-
-        for (i = 0; i < DORMINDO_SIZE; i = i + 1) begin
-            $readmemh($sformatf("hexs/Dormindo/zanagotchi_dormindo%0d.hex", i + 1), memoria_dormindo, i*1024, i*1024 + 1023);
-        end
-
-        for (i = 0; i < COMENDO_SIZE; i = i + 1) begin
-            $readmemh($sformatf("hexs/Comendo/zanagotchi_comendo%0d.hex", i + 1), memoria_comendo, i*1024, i*1024 + 1023);
-        end
-
-        for (i = 0; i < DANDO_AULA_SIZE; i = i + 1) begin
-            $readmemh($sformatf("hexs/DandoAula/zanagotchi_dando_aula%0d.hex", i + 1), memoria_dando_aula, i*1024, i*1024 + 1023);
-        end
-
-        for (i = 0; i < MORTO_SIZE; i = i + 1) begin
-            $readmemh($sformatf("hexs/Morto/zanagotchi_morto%0d.hex", i + 1), memoria_morto, i*1024, i*1024 + 1023);
-        end
+        $readmemh("hexs/Idle/zanagotchi_idle1.hex", memoria_idle, );
+        $readmemh("hexs/Dormindo/zanagotchi_dormindo1.hex", memoria_dormindo, 0, 1023);
+        $readmemh("hexs/Comendo/zanagotchi_comendo1.hex", memoria_comendo, 0, 1023);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula1.hex", memoria_dando_aula, 0, 1023);
+        $readmemh("hexs/Morto/zanagotchi_morto1.hex", memoria_morto, 0, 1023);
     end
 
     // Atualização de imagens baseada no estado

@@ -20,6 +20,8 @@ begin
                         16'b0 :
                     16'b1;
 
-    b_out <= !counter_high;
+    b_prev <= (b_in || counter_low) && !counter_high;
+
+    b_out <= !b_prev && (b_prev !== (b_in || counter_low) && !counter_high);
 end
 endmodule

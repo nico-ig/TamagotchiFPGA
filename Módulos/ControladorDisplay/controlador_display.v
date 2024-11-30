@@ -133,7 +133,7 @@ module controlador_display
         bitNumber <= 3'd7;
         dataToSend <= data_to_send;
         state <= STATE_SEND;
-        byte_counter = byte_counter + 1;
+        byte_counter = byte_counter + 10'd1;
       end
     endcase
   end
