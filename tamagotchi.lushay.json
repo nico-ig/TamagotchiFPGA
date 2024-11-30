@@ -2,6 +2,6 @@
   "name": "tamagochi",
   "includedFiles": "all",
   "testBenches": "all",
-  "top": "zanagotchi",
+  "top": "botao_ativa_imagem",
   "constraintsFile": "tangnano9k.cst"
 }
