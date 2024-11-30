@@ -12,7 +12,7 @@ module controlador_estados
                MORTO = 4'b1000;
 
     reg b1_reg = 0, b2_reg = 0;
-    reg [15:0] counter = 16'b1;
+    reg [31:0] counter = 32'b1;
 
     initial
     begin
@@ -39,8 +39,8 @@ module controlador_estados
         end
 
         b1_reg <= (b1_reg || b1) && counter;
-        b2_reg <= (b2_reg |} b2) && counter;
+        b2_reg <= (b2_reg || b2) && counter;
 
-        counter <= counter + 16'b1;
+        counter <= counter + 32'b1;
     end
 endmodule
