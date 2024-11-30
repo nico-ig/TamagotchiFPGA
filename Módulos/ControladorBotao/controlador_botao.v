@@ -5,14 +5,14 @@ module controlador_botao
 );
 
 reg dirty = 0;
-reg [15:0] counter = 0;
+reg [9:0] counter = 0;
 
 initial b_out = 0;
 
 always @ (posedge clk)
 begin
     // O botao esta pressionado e o pulso ainda nao foi gerado
-    if (b_in === 1 && b_out === 0 && !dirty)
+    if (b_in === 0 && b_out === 0 && !dirty)
     begin
         // Botao estavel, gera o pulso e ativa a flag, nao gera outro pulso ate que o botao seja solto
         if (counter === 16'hFF)
@@ -23,7 +23,7 @@ begin
         counter <= counter + 16'b1;
 
     // O botao esta solto e um pulso foi gerado
-    end else if (b_in === 0 && dirty)
+    end else if (b_in === 1 && dirty)
     begin
         // Botao realmente esta solto, desativa a flag e permite que um novo pulso seja gerado
         if (counter === 16'hFF)
