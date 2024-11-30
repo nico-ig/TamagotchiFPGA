@@ -90,11 +90,11 @@ module controlador_imagens
 
             if (estado == IDLE) begin 
                 if (incrementa) begin
-                    idle_counter <= idle_counter + 1;
+                    idle_counter <= idle_counter + 3'd1;
                     if (idle_counter == 5)
                         incrementa <= 0;
                 end else begin
-                    idle_counter <= idle_counter - 1;
+                    idle_counter <= idle_counter - 3'd1;
                     if (idle_counter == 0)
                         incrementa <= 1;
                 end 
@@ -105,7 +105,7 @@ module controlador_imagens
             i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
 
             if (estado == COMENDO) begin 
-                comendo_counter <= comendo_counter + 1;
+                comendo_counter <= comendo_counter + 3'd1;
 
                 if (comendo_counter == 0) 
                     i_comendo <= 0;
@@ -325,12 +325,12 @@ module controlador_imagens
         begin
 
             case (estado)
-                IDLE: data_to_send <= memoria_idle[i_idle*1024 + byte_counter + 8 * (idle_counter - 3'd3) * (byte_counter > 260)];
-                DORMINDO: data_to_send <= memoria_dormindo[i_dormindo*1024 + byte_counter];
-                COMENDO: data_to_send <= memoria_comendo[i_comendo*1024 + byte_counter];
-                DANDO_AULA: data_to_send <= memoria_dando_aula[i_dando_aula*1024 + byte_counter];
-                MORTO: data_to_send <= memoria_morto[i_morto*1024 + byte_counter];
-                default: data_to_send <= memoria_idle[i_idle*1024 + byte_counter];
+                IDLE: data_to_send <= memoria_idle[i_idle*11'd1024 + byte_counter + 3'd8 * (idle_counter - 3'd3) * (byte_counter > 8'd260)];
+                DORMINDO: data_to_send <= memoria_dormindo[i_dormindo*11'd1024 + byte_counter];
+                COMENDO: data_to_send <= memoria_comendo[i_comendo*11'd1024 + byte_counter];
+                DANDO_AULA: data_to_send <= memoria_dando_aula[i_dando_aula*11'd1024 + byte_counter];
+                MORTO: data_to_send <= memoria_morto[i_morto*11'd1024 + byte_counter];
+                default: data_to_send <= memoria_idle[i_idle*11'd1024 + byte_counter];
             endcase
         end 
     end
