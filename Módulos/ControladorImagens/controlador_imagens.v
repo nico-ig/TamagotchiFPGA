@@ -3,11 +3,10 @@ module controlador_imagens
     input wire clk,
     input wire [9:0] byte_counter,
     input wire [3:0] estado,
-    input wire [7:0] fome, felicidade, sono,
     output reg [7:0] data_to_send
 );
 
-    //reg [7:0] felicidade, fome, sono;
+    reg [7:0] felicidade, fome, sono;
 
     // Estados possíveis
     localparam IDLE = 4'b0000, 
@@ -61,9 +60,9 @@ module controlador_imagens
     // Inicializa a memória
     initial
     begin
-        // felicidade = 34;
-        // fome = 22;
-        // sono = 84;
+        felicidade = 34;
+        fome = 22;
+        sono = 84;
 
         $readmemh("hexs/Idle/zanagotchi_idle1.hex", memoria_idle_0);
         $readmemh("hexs/Idle/zanagotchi_idle2.hex", memoria_idle_1);

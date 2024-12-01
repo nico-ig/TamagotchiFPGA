@@ -55,9 +55,6 @@ module zanagotchi
     (
         .clk(clk),
         .estado(estado),
-        .fome(fome),
-        .felicidade(felicidade),
-        .sono(sono),
         .byte_counter(byte_counter),
         .data_to_send(data_to_send)
     );
