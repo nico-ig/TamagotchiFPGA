@@ -25,11 +25,10 @@ module controlador_estados
     begin
         if (!counter)
         begin
-//            if (estado === MORTO || !fome || !sono || !felicidade)
-//                estado <= MORTO;
-//
-//            else 
-            if (estado === IDLE)
+            if (estado === MORTO || !fome || !sono || !felicidade)
+                estado <= MORTO;
+
+            else if (estado === IDLE)
             begin
                 estado <= b1_reg && !b2_reg ? COMENDO :
                           !b1_reg && b2_reg ? DORMINDO :

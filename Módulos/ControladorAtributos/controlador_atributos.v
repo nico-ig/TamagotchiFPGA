@@ -19,10 +19,10 @@ module controlador_atributos
 
     // Velocidades atributos
     localparam VEL_DESCIDA = 8'd1,
-               VEL_SUBIDA = 8'd7;
+               VEL_SUBIDA = 8'd3;
 
     // Contador para controlar o incremento dos atributos
-    reg [19:0] contador;
+    reg [22:0] contador;
 
     // Estado inicial
     initial 

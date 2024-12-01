@@ -137,7 +137,7 @@ module controlador_imagens
     begin
             //==================================== FELICIDADE ====================================
 
-            if ((estado !== INTRO) && (byte_counter == 65 ||     //  8 * 8 + 1 = 65
+            if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 65 ||     //  8 * 8 + 1 = 65
                 byte_counter == 73 ||     //  9 * 8 + 1 = 73
                 byte_counter == 81 ||     // 10 * 8 + 1 = 81
                 byte_counter == 89 ||     // 11 * 8 + 1 = 89
@@ -149,7 +149,7 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end 
-            else if ((estado !== INTRO) && (byte_counter == 66 || //  8 * 8 + 2 = 66
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 66 || //  8 * 8 + 2 = 66
                 byte_counter == 74 ||      //  9 * 8 + 2 = 74
                 byte_counter == 82 ||      // 10 * 8 + 2 = 82
                 byte_counter == 90 ||      // 11 * 8 + 2 = 90
@@ -161,7 +161,7 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end
-            else if ((estado !== INTRO) && (byte_counter == 67 || //  8 * 8 + 3 = 67
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 67 || //  8 * 8 + 3 = 67
                 byte_counter == 75 ||      //  9 * 8 + 3 = 75
                 byte_counter == 83 ||      // 10 * 8 + 3 = 83
                 byte_counter == 91 ||      // 11 * 8 + 3 = 91
@@ -173,7 +173,7 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end
-            else if ((estado !== INTRO) && (byte_counter == 68 || //  8 * 8 + 4 = 68
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 68 || //  8 * 8 + 4 = 68
                 byte_counter == 76 ||      //  9 * 8 + 4 = 76
                 byte_counter == 84 ||      // 10 * 8 + 4 = 84
                 byte_counter == 92 ||      // 11 * 8 + 4 = 92
@@ -185,7 +185,7 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end
-            else if ((estado !== INTRO) && (byte_counter == 69 || //  8 * 8 + 5 = 69
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 69 || //  8 * 8 + 5 = 69
                 byte_counter == 77 ||      //  9 * 8 + 5 = 77
                 byte_counter == 85 ||      // 10 * 8 + 5 = 85
                 byte_counter == 93 ||      // 11 * 8 + 5 = 93
@@ -200,7 +200,7 @@ module controlador_imagens
 
             //======================================= FOME =======================================
             
-            else if ((estado !== INTRO) && (byte_counter == 145 || // 18 * 8 + 1 = 145
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 145 || // 18 * 8 + 1 = 145
                 byte_counter == 153 ||      // 19 * 8 + 1 = 153
                 byte_counter == 161 ||      // 20 * 8 + 1 = 161
                 byte_counter == 169 ||      // 21 * 8 + 1 = 169
@@ -212,7 +212,7 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end 
-            else if ((estado !== INTRO) && (byte_counter == 146 || // 18 * 8 + 2 = 146
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 146 || // 18 * 8 + 2 = 146
                 byte_counter == 154 ||      // 19 * 8 + 2 = 154
                 byte_counter == 162 ||      // 20 * 8 + 2 = 162
                 byte_counter == 170 ||      // 21 * 8 + 2 = 170
@@ -224,7 +224,7 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end
-            else if ((estado !== INTRO) && (byte_counter == 147 || // 18 * 8 + 3 = 147
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 147 || // 18 * 8 + 3 = 147
                 byte_counter == 155 ||      // 19 * 8 + 3 = 155
                 byte_counter == 163 ||      // 20 * 8 + 3 = 163
                 byte_counter == 171 ||      // 21 * 8 + 3 = 171
@@ -236,7 +236,7 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end
-            else if ((estado !== INTRO) && (byte_counter == 148 || // 18 * 8 + 4 = 148
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 148 || // 18 * 8 + 4 = 148
                 byte_counter == 156 ||      // 19 * 8 + 4 = 156
                 byte_counter == 164 ||      // 20 * 8 + 4 = 164
                 byte_counter == 172 ||      // 21 * 8 + 4 = 172
@@ -248,7 +248,7 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end
-            else if ((estado !== INTRO) && (byte_counter == 149 || // 18 * 8 + 5 = 149
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 149 || // 18 * 8 + 5 = 149
                 byte_counter == 157 ||      // 19 * 8 + 5 = 157
                 byte_counter == 165 ||      // 20 * 8 + 5 = 165
                 byte_counter == 173 ||      // 21 * 8 + 5 = 173
@@ -263,7 +263,7 @@ module controlador_imagens
 
             //======================================= SONO =======================================
 
-            else if ((estado !== INTRO) && (byte_counter == 225 || // 28 * 8 + 1 = 225
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 225 || // 28 * 8 + 1 = 225
                 byte_counter == 233 ||      // 29 * 8 + 1 = 233
                 byte_counter == 241 ||      // 30 * 8 + 1 = 241
                 byte_counter == 249 ||      // 31 * 8 + 1 = 249
@@ -275,7 +275,7 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end 
-            else if ((estado !== INTRO) && (byte_counter == 226 || // 28 * 8 + 2 = 226
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 226 || // 28 * 8 + 2 = 226
                 byte_counter == 234 ||      // 29 * 8 + 2 = 234
                 byte_counter == 242 ||      // 30 * 8 + 2 = 242
                 byte_counter == 250 ||      // 31 * 8 + 2 = 250
@@ -287,7 +287,7 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end
-            else if ((estado !== INTRO) && (byte_counter == 227 || // 28 * 8 + 3 = 227
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 227 || // 28 * 8 + 3 = 227
                 byte_counter == 235 ||      // 29 * 8 + 3 = 235
                 byte_counter == 243 ||      // 30 * 8 + 3 = 243
                 byte_counter == 251 ||      // 31 * 8 + 3 = 251
@@ -299,7 +299,7 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end
-            else if ((estado !== INTRO) && (byte_counter == 228 || // 28 * 8 + 4 = 228
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 228 || // 28 * 8 + 4 = 228
                 byte_counter == 236 ||      // 29 * 8 + 4 = 236
                 byte_counter == 244 ||      // 30 * 8 + 4 = 244
                 byte_counter == 252 ||      // 31 * 8 + 4 = 252
@@ -311,7 +311,7 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end
-            else if ((estado !== INTRO) && (byte_counter == 229 || // 28 * 8 + 5 = 229
+            else if ((estado !== INTRO && estado !== MORTO) && (byte_counter == 229 || // 28 * 8 + 5 = 229
                 byte_counter == 237 ||      // 29 * 8 + 5 = 237
                 byte_counter == 245 ||      // 30 * 8 + 5 = 245
                 byte_counter == 253 ||      // 31 * 8 + 5 = 253
