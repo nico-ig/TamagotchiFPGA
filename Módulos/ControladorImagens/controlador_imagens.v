@@ -139,11 +139,14 @@ module controlador_imagens
     // Atualização de imagens baseada no estado
     always @(posedge clk) 
     begin
-        if (estado === INTRO)
-            data_to_send <= memoria_intro_0[byte_counter];
-        else begin
-            if (byte_to_send < 65 || byte_to_send > 261)
+        //if (estado === INTRO)
+        //    data_to_send <= memoria_intro_0[byte_counter];
+        //else begin
+            if (byte_counter < 65 || byte_counter > 261)
+            begin
                 case (estado)
+                    INTRO:
+                        data_to_send <= memoria_intro_0[byte_counter];
                     IDLE:
                     begin
                         case (i_idle)
@@ -200,14 +203,15 @@ module controlador_imagens
                         3'd4: data_to_send <= memoria_morto_4[byte_counter];
                         3'd5: data_to_send <= memoria_morto_5[byte_counter];
                         3'd6: data_to_send <= memoria_morto_6[byte_counter];
-                        3'd7: data_to_send <= memoria_morto_6[byte_counter];
+                        3'd7: data_to_send <= memoria_morto_7[byte_counter];
                         default data_to_send <= 0;
                         endcase
                     end
                     default: data_to_send <= 0;
                 endcase
             //==================================== FELICIDADE ====================================
-            end else if (byte_counter == 65 ||     //  8 * 8 + 1 = 65
+            end 
+            else if (byte_counter == 65 ||     //  8 * 8 + 1 = 65
                 byte_counter == 73 ||     //  9 * 8 + 1 = 73
                 byte_counter == 81 ||     // 10 * 8 + 1 = 81
                 byte_counter == 89 ||     // 11 * 8 + 1 = 89
@@ -381,19 +385,13 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end
-            else begin 
-                (byte_counter == 229 || // 28 * 8 + 5 = 229
-                byte_counter == 237 ||      // 29 * 8 + 5 = 237
-                byte_counter == 245 ||      // 30 * 8 + 5 = 245
-                byte_counter == 253 ||      // 31 * 8 + 5 = 253
-                byte_counter == 261) begin  // 32 * 8 + 5 = 261
+            else
                 if (sono > 10)
                     data_to_send <= 8'b11101110;
                 else if (sono > 0)
                     data_to_send <= 8'b11100000;
                 else
                     data_to_send <= 0;
-            end
         end
     end
 
