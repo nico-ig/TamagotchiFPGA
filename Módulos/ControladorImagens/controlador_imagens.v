@@ -109,7 +109,7 @@ module controlador_imagens
     reg [2:0] i_morto = 0;
 
     reg [9:0] byte_counter_idle = 0;
-    reg[3:0] idle_offset = 0;
+    reg [3:0] idle_offset = 0;
     reg offset_idle_counter = 0;
 
     always @(posedge clk) begin
@@ -119,7 +119,7 @@ module controlador_imagens
     always @(posedge clk) begin 
         frame_counter <= frame_counter + 23'd1;
         if (frame_counter == 0) begin
-            offset_idle_counter <= offset_idle_counter + 1;
+            offset_idle_counter <= offset_idle_counter + 1'd1;
             if (offset_idle_counter == 0) idle_offset <= idle_offset + 4'd8;
             
             i_idle <= 3'd5;
