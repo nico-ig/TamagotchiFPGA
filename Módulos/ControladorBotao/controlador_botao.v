@@ -1,7 +1,8 @@
 module controlador_botao
 (
     input b_in, clk,
-    output reg b_out, b_hold_out
+    output reg b_out,
+    output wire b_hold_out
 );
 
 reg dirty = 0;
@@ -9,6 +10,8 @@ reg [7:0] counter = 0;
 reg [7:0] reset_counter = 0;
 
 initial b_out = 0;
+
+assign b_hold_out = dirty;
 
 always @ (posedge clk)
 begin
@@ -19,7 +22,6 @@ begin
         if (counter === 4'hF)
         begin
             b_out <= 1;
-            b_hold_out <= 1;
             dirty <= 1;
         end
         counter <= counter + 4'b1;
