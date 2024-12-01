@@ -116,7 +116,7 @@ module controlador_imagens
     always @(posedge clk) begin 
         frame_counter <= frame_counter + 23'd1;
         if (frame_counter == 0) begin
-            i_idle <= 3'd4;
+            i_idle <= (i_idle + 1) % IDLE_SIZE;
             i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
             i_comendo <= (i_comendo + 1) % COMENDO_SIZE;
             i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
