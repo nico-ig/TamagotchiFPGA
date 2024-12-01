@@ -1,6 +1,6 @@
 module controlador_estados
 (
-    input wire b1, b2, clk,
+    input wire b1, b2, b1_hold, b2_hold, clk,
     input wire [7:0] fome, felicidade, sono,
     output reg[4:0] estado
 );
@@ -45,6 +45,6 @@ module controlador_estados
         b2_reg <= (b2_reg || b2) && counter;
 
         counter <= counter + 22'b1;
-        reset_counter <= (b1_reg && b2_reg) ? reset_counter + 22'b1 :22'b1;
+        reset_counter <= (b1_hold && b2_hold) ? reset_counter + 22'b1 :22'b1;
     end
 endmodule
