@@ -87,58 +87,11 @@ module controlador_imagens
     always @(posedge clk) begin 
         frame_counter <= frame_counter + 23'd1;
         if (frame_counter == 0) begin
-            case (estado) 
-            IDLE: begin 
-                if (incrementa) begin
-                    idle_counter <= idle_counter + 3'd1;
-                    if (idle_counter == 5)
-                        incrementa <= 0;
-                end else begin
-                    idle_counter <= idle_counter - 3'd1;
-                    if (idle_counter == 0)
-                        incrementa <= 1;
-                end 
-
-                comendo_counter <= 0;
-            end
-            DORMINDO: begin
-                i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
-
-                idle_counter <= 0;
-                incrementa <= 1;
-            end
-            COMENDO: begin 
-                comendo_counter <= comendo_counter + 3'd1;
-
-                if (comendo_counter == 0) 
-                    i_comendo <= 4;
-                else if (comendo_counter == 1)
-                    i_comendo <= 4;
-                else if (comendo_counter == 7) 
-                    i_comendo <= 4;
-                else if (comendo_counter % 2 == 0)
-                    i_comendo <= 4;
-                else 
-                    i_comendo <= 3;
-
-                idle_counter <= 0;
-                incrementa <= 1;
-            end
-            DANDO_AULA: begin
-                //RANDOMIZAR O FRAME
-                i_dando_aula <= 7;
-
-                idle_counter <= 0;
-                incrementa <= 1;
-            end
-            MORTO: begin
-                //RANDOMIZAR O TROVAO
-                i_morto <= (i_morto + 1) % (MORTO_SIZE - 1);
-
-                idle_counter <= 0;
-                incrementa <= 1;
-            end
-            endcase
+            i_idle <= (i_idle + 1) % IDLE_SIZE;
+            i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
+            i_comendo <= (i_comendo + 1) % COMENDO_SIZE;
+            i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
+            i_morto <= (i_morto + 1) % MORTO_SIZE;
         end
     end
 
