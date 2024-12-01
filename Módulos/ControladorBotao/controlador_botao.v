@@ -5,7 +5,7 @@ module controlador_botao
 );
 
 reg dirty = 0;
-reg [3:0] counter = 0;
+reg [7:0] counter = 0;
 
 initial b_out = 0;
 

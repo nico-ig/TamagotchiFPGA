@@ -22,7 +22,7 @@ module controlador_atributos
                VEL_SUBIDA = 8'd7;
 
     // Contador para controlar o incremento dos atributos
-    reg [25:0] contador;
+    reg [19:0] contador;
 
     // Estado inicial
     initial 
@@ -42,6 +42,12 @@ module controlador_atributos
         begin
             // Incremento/decrementando de atributos
             case(estado)
+                INTRO:
+                begin
+                    sono <= sono;
+                    fome <= fome;
+                    felicidade <= felicidade;
+                end
                 DORMINDO:
                 begin
                     sono <= sono < MAX_SONO - VEL_SUBIDA ? 
