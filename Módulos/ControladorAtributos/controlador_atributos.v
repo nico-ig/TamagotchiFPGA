@@ -47,7 +47,7 @@ module controlador_atributos
         begin
             // Incremento/decrementando de atributos
             case(estado)
-                INTRO || MORTO:
+                INTRO, MORTO:
                 begin
                     sono <= INIT_SONO;
                     fome <= INIT_FOME;
