@@ -24,11 +24,11 @@ module controlador_estados
     // Lógica principal
     always @(posedge clk) 
     begin
-        if (!counter)
+        if (!reset_counter)
+            estado <= INTRO;
+        else if (!counter)
         begin
-            if (!reset_counter)
-                estado <= INTRO;
-            else if (estado === MORTO || !fome || !sono || !felicidade)
+            if (estado === MORTO || !fome || !sono || !felicidade)
                 estado <= MORTO;
 
             else if (estado === IDLE)

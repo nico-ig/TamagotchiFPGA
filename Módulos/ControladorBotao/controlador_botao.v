@@ -7,7 +7,6 @@ module controlador_botao
 
 reg dirty = 0;
 reg [7:0] counter = 0;
-reg [7:0] reset_counter = 0;
 
 initial b_out = 0;
 
@@ -28,7 +27,6 @@ begin
     // O botao esta solto e um pulso foi gerado
     end else if (b_in === 1 && dirty)
     begin
-        reset_counter <= reset_counter + 8'b1;
         // Botao realmente esta solto, desativa a flag e permite que um novo pulso seja gerado
         if (counter === 4'hF)
             dirty <= 0;
