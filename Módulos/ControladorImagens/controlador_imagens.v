@@ -2,11 +2,10 @@ module controlador_imagens
 (
     input wire clk,
     input wire [9:0] byte_counter,
+    input wire [7:0] felicidade, fome, sono,
     input wire [4:0] estado,
     output reg [7:0] data_to_send
 );
-
-    reg [7:0] felicidade, fome, sono;
 
     // ESTADOS
     localparam INTRO = 5'b00000,
@@ -64,9 +63,6 @@ module controlador_imagens
     // Inicializa a memória
     initial
     begin
-        felicidade = 34;
-        fome = 22;
-        sono = 84;
 
         $readmemh("hexs/Intro/zanagotchi_intro1.hex", memoria_intro_0);
 
