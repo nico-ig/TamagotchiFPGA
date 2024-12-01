@@ -123,13 +123,26 @@ module controlador_imagens
         if (frame_counter == 0) begin
             offset_idle_counter <= offset_idle_counter + 1'd1;
             if (offset_idle_counter == 0) idle_offset <= idle_offset + 4'd8;
-            
-            i_idle <= 3'd5;
             i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
             i_comendo <= (i_comendo + 1) % COMENDO_SIZE;
             i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
             i_morto <= (i_morto + 1) % MORTO_SIZE;
         end
+    end
+
+    always @(posedge clk) begin 
+        if (felicidade > 90 && fome > 90 && sono > 90) 
+            i_idle <= 0;
+        else if (felicidade < 10) 
+            i_idle <= 2;
+        else if (fome < 10) 
+            i_idle <= 1; 
+        else if (sono < 10)
+            i_idle <= 5;
+        else if (felicidade < 20 || fome < 20 || sono < 20) 
+            i_idle <= 4;
+        else
+            i_idle <= 3;
     end
 
     // Atualização de imagens baseada no estado
