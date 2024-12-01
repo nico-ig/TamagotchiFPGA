@@ -110,6 +110,7 @@ module controlador_imagens
 
     reg [9:0] byte_counter_idle = 0;
     reg[3:0] idle_offset = 0;
+    reg offset_idle_counter = 0;
 
     always @(posedge clk) begin
         byte_counter_idle <= byte_counter + idle_offset * (byte_counter > 10'd300);
@@ -118,7 +119,9 @@ module controlador_imagens
     always @(posedge clk) begin 
         frame_counter <= frame_counter + 23'd1;
         if (frame_counter == 0) begin
-            idle_offset <= idle_offset + 4'd8;
+            offset_idle_counter <= offset_idle_counter + 1;
+            if (offset_idle_counter == 0) idle_offset <= idle_offset + 4'd8;
+            
             i_idle <= 3'd5;
             i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
             i_comendo <= (i_comendo + 1) % COMENDO_SIZE;
