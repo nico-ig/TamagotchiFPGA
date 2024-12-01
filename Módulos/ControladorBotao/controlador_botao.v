@@ -28,13 +28,13 @@ begin
     // O botao esta solto e um pulso foi gerado
     end else if (b_in === 1 && dirty)
     begin
-        reset_counter <= reset_counter + 4'b1;
+        reset_counter <= reset_counter + 8'b1;
         // Botao realmente esta solto, desativa a flag e permite que um novo pulso seja gerado
         if (counter === 4'hF)
             dirty <= 0;
         counter <= counter + 4'b1;
 
     end else
-        b_out <= b_in && !reset_counter;
+        b_out <= 0;
 end
 endmodule
