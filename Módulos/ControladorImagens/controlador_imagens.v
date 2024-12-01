@@ -142,9 +142,72 @@ module controlador_imagens
         if (estado === INTRO)
             data_to_send <= memoria_intro_0[byte_counter];
         else begin
+            if (byte_to_send < 65 || byte_to_send > 261)
+                case (estado)
+                    IDLE:
+                    begin
+                        case (i_idle)
+                        3'd0: data_to_send <= memoria_idle_0[byte_counter_idle];
+                        3'd1: data_to_send <= memoria_idle_1[byte_counter_idle];
+                        3'd2: data_to_send <= memoria_idle_2[byte_counter_idle];
+                        3'd3: data_to_send <= memoria_idle_3[byte_counter_idle];
+                        3'd4: data_to_send <= memoria_idle_4[byte_counter_idle];
+                        3'd5: data_to_send <= memoria_idle_5[byte_counter_idle];
+                        default: data_to_send <= 0;
+                        endcase
+                    end
+                    DORMINDO:
+                    begin
+                        case (i_dormindo)
+                        3'd0: data_to_send <= memoria_dormindo_0[byte_counter];
+                        3'd1: data_to_send <= memoria_dormindo_1[byte_counter];
+                        3'd2: data_to_send <= memoria_dormindo_2[byte_counter];
+                        3'd3: data_to_send <= memoria_dormindo_3[byte_counter];
+                        default: data_to_send <= 0;
+                        endcase
+                    end
+                    COMENDO:
+                    begin
+                        case (i_comendo)
+                        3'd0: data_to_send <= memoria_comendo_0[byte_counter];
+                        3'd1: data_to_send <= memoria_comendo_1[byte_counter];
+                        3'd2: data_to_send <= memoria_comendo_2[byte_counter];
+                        3'd3: data_to_send <= memoria_comendo_3[byte_counter];
+                        3'd4: data_to_send <= memoria_comendo_4[byte_counter];
+                        default: data_to_send <= 0;
+                        endcase
+                    end
+                    DANDO_AULA:
+                    begin
+                        case (i_dando_aula)
+                        3'd0: data_to_send <= memoria_dando_aula_0[byte_counter];
+                        3'd1: data_to_send <= memoria_dando_aula_1[byte_counter];
+                        3'd2: data_to_send <= memoria_dando_aula_2[byte_counter];
+                        3'd3: data_to_send <= memoria_dando_aula_3[byte_counter];
+                        3'd4: data_to_send <= memoria_dando_aula_4[byte_counter];
+                        3'd5: data_to_send <= memoria_dando_aula_5[byte_counter];
+                        3'd6: data_to_send <= memoria_dando_aula_6[byte_counter];
+                        default: data_to_send <= 0;
+                        endcase
+                    end
+                    MORTO:
+                    begin
+                        case (i_morto)
+                        3'd0: data_to_send <= memoria_morto_0[byte_counter];
+                        3'd1: data_to_send <= memoria_morto_1[byte_counter];
+                        3'd2: data_to_send <= memoria_morto_2[byte_counter];
+                        3'd3: data_to_send <= memoria_morto_3[byte_counter];
+                        3'd4: data_to_send <= memoria_morto_4[byte_counter];
+                        3'd5: data_to_send <= memoria_morto_5[byte_counter];
+                        3'd6: data_to_send <= memoria_morto_6[byte_counter];
+                        3'd7: data_to_send <= memoria_morto_6[byte_counter];
+                        default data_to_send <= 0;
+                        endcase
+                    end
+                    default: data_to_send <= 0;
+                endcase
             //==================================== FELICIDADE ====================================
-
-            if (byte_counter == 65 ||     //  8 * 8 + 1 = 65
+            end else if (byte_counter == 65 ||     //  8 * 8 + 1 = 65
                 byte_counter == 73 ||     //  9 * 8 + 1 = 73
                 byte_counter == 81 ||     // 10 * 8 + 1 = 81
                 byte_counter == 89 ||     // 11 * 8 + 1 = 89
@@ -318,7 +381,8 @@ module controlador_imagens
                 else
                     data_to_send <= 0;
             end
-            else if (byte_counter == 229 || // 28 * 8 + 5 = 229
+            else begin 
+                (byte_counter == 229 || // 28 * 8 + 5 = 229
                 byte_counter == 237 ||      // 29 * 8 + 5 = 237
                 byte_counter == 245 ||      // 30 * 8 + 5 = 245
                 byte_counter == 253 ||      // 31 * 8 + 5 = 253
@@ -329,73 +393,7 @@ module controlador_imagens
                     data_to_send <= 8'b11100000;
                 else
                     data_to_send <= 0;
-            end else
-
-            begin
-                case (estado)
-                    IDLE:
-                    begin
-                        case (i_idle)
-                        3'd0: data_to_send <= memoria_idle_0[byte_counter_idle];
-                        3'd1: data_to_send <= memoria_idle_1[byte_counter_idle];
-                        3'd2: data_to_send <= memoria_idle_2[byte_counter_idle];
-                        3'd3: data_to_send <= memoria_idle_3[byte_counter_idle];
-                        3'd4: data_to_send <= memoria_idle_4[byte_counter_idle];
-                        3'd5: data_to_send <= memoria_idle_5[byte_counter_idle];
-                        default: data_to_send <= 0;
-                        endcase
-                    end
-                    DORMINDO:
-                    begin
-                        case (i_dormindo)
-                        3'd0: data_to_send <= memoria_dormindo_0[byte_counter];
-                        3'd1: data_to_send <= memoria_dormindo_1[byte_counter];
-                        3'd2: data_to_send <= memoria_dormindo_2[byte_counter];
-                        3'd3: data_to_send <= memoria_dormindo_3[byte_counter];
-                        default: data_to_send <= 0;
-                        endcase
-                    end
-                    COMENDO:
-                    begin
-                        case (i_comendo)
-                        3'd0: data_to_send <= memoria_comendo_0[byte_counter];
-                        3'd1: data_to_send <= memoria_comendo_1[byte_counter];
-                        3'd2: data_to_send <= memoria_comendo_2[byte_counter];
-                        3'd3: data_to_send <= memoria_comendo_3[byte_counter];
-                        3'd4: data_to_send <= memoria_comendo_4[byte_counter];
-                        default: data_to_send <= 0;
-                        endcase
-                    end
-                    DANDO_AULA:
-                    begin
-                        case (i_dando_aula)
-                        3'd0: data_to_send <= memoria_dando_aula_0[byte_counter];
-                        3'd1: data_to_send <= memoria_dando_aula_1[byte_counter];
-                        3'd2: data_to_send <= memoria_dando_aula_2[byte_counter];
-                        3'd3: data_to_send <= memoria_dando_aula_3[byte_counter];
-                        3'd4: data_to_send <= memoria_dando_aula_4[byte_counter];
-                        3'd5: data_to_send <= memoria_dando_aula_5[byte_counter];
-                        3'd6: data_to_send <= memoria_dando_aula_6[byte_counter];
-                        default: data_to_send <= 0;
-                        endcase
-                    end
-                    MORTO:
-                    begin
-                        case (i_morto)
-                        3'd0: data_to_send <= memoria_morto_0[byte_counter];
-                        3'd1: data_to_send <= memoria_morto_1[byte_counter];
-                        3'd2: data_to_send <= memoria_morto_2[byte_counter];
-                        3'd3: data_to_send <= memoria_morto_3[byte_counter];
-                        3'd4: data_to_send <= memoria_morto_4[byte_counter];
-                        3'd5: data_to_send <= memoria_morto_5[byte_counter];
-                        3'd6: data_to_send <= memoria_morto_6[byte_counter];
-                        3'd7: data_to_send <= memoria_morto_6[byte_counter];
-                        default data_to_send <= 0;
-                        endcase
-                    end
-                    default: data_to_send <= 0;
-                endcase
-            end 
+            end
         end
     end
 
