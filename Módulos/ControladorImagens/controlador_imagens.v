@@ -132,6 +132,21 @@ module controlador_imagens
         end
     end
 
+    always @(posedge clk) begin 
+        if (felicidade > 90 && fome > 90 && sono > 90) 
+            i_idle <= 0;
+        else if (felicidade < 10) 
+            i_idle <= 2;
+        else if (fome < 10) 
+            i_idle <= 1; 
+        else if (sono < 10)
+            i_idle <= 5;
+        else if (felicidade < 20 || fome < 20 || sono < 20) 
+            i_idle <= 4;
+        else
+            i_idle <= 3;
+    end
+
     // Atualização de imagens baseada no estado
     always @(posedge clk) 
     begin
