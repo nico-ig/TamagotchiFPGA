@@ -14,6 +14,7 @@ module controlador_estados
 
     reg b1_reg = 0, b2_reg = 0;
     reg [21:0] counter = 22'b0;
+    reg [21:0] reset_counter = 22'b1;
 
     initial
     begin
@@ -25,7 +26,9 @@ module controlador_estados
     begin
         if (!counter)
         begin
-            if (estado === MORTO || !fome || !sono || !felicidade)
+            if (!reset_counter)
+                estado <= INTRO;
+            else if (estado === MORTO || !fome || !sono || !felicidade)
                 estado <= MORTO;
 
             else if (estado === IDLE)
@@ -42,5 +45,6 @@ module controlador_estados
         b2_reg <= (b2_reg || b2) && counter;
 
         counter <= counter + 22'b1;
+        reset_counter <= (b1_reg && b2_reg) ? reset_counter + 22'b1 :22'b1;
     end
 endmodule

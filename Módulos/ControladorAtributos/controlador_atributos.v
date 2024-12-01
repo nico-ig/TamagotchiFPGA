@@ -36,7 +36,7 @@ module controlador_atributos
     // Lógica principal
     always @(posedge clk) 
     begin       
-        contador <= contador + 26'b1;
+        contador <= contador + 23'b1;
 
         if (!contador)
         begin
