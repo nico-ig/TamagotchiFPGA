@@ -108,14 +108,12 @@ module controlador_imagens
     reg [2:0] i_dando_aula = 0;
     reg [2:0] i_morto = 0;
 
-    reg [2:0] comendo_counter = 0;
-    reg [2:0] idle_counter = 0;
-
-    reg incrementa = 1;
+    reg[3:0] idle_offset = 0;
 
     always @(posedge clk) begin 
         frame_counter <= frame_counter + 23'd1;
         if (frame_counter == 0) begin
+            idle_offset <= idle_offset + 4'd8;
             i_idle <= (i_idle + 1) % IDLE_SIZE;
             i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
             i_comendo <= (i_comendo + 1) % COMENDO_SIZE;
@@ -322,12 +320,12 @@ module controlador_imagens
                 IDLE:
                 begin
                     case (i_idle)
-                    3'd0: data_to_send <= memoria_idle_0[byte_counter];
-                    3'd1: data_to_send <= memoria_idle_1[byte_counter];
-                    3'd2: data_to_send <= memoria_idle_2[byte_counter];
-                    3'd3: data_to_send <= memoria_idle_3[byte_counter];
-                    3'd4: data_to_send <= memoria_idle_4[byte_counter];
-                    3'd5: data_to_send <= memoria_idle_5[byte_counter];
+                    3'd0: data_to_send <= memoria_idle_0[byte_counter + idle_offset * (byte_counter > 10'd300)];
+                    3'd1: data_to_send <= memoria_idle_1[byte_counter + idle_offset * (byte_counter > 10'd300)];
+                    3'd2: data_to_send <= memoria_idle_2[byte_counter + idle_offset * (byte_counter > 10'd300)];
+                    3'd3: data_to_send <= memoria_idle_3[byte_counter + idle_offset * (byte_counter > 10'd300)];
+                    3'd4: data_to_send <= memoria_idle_4[byte_counter + idle_offset * (byte_counter > 10'd300)];
+                    3'd5: data_to_send <= memoria_idle_5[byte_counter + idle_offset * (byte_counter > 10'd300)];
                     default: data_to_send <= 0;
                     endcase
                 end
