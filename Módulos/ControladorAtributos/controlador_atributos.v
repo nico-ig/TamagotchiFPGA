@@ -22,7 +22,7 @@ module controlador_atributos
                VEL_SUBIDA = 8'd7;
 
     // Contador para controlar o incremento dos atributos
-    reg [15:0] contador;
+    reg [25:0] contador;
 
     // Estado inicial
     initial 
@@ -36,7 +36,7 @@ module controlador_atributos
     // Lógica principal
     always @(posedge clk) 
     begin       
-        contador <= contador + 16'b1;
+        contador <= contador + 26'b1;
 
         if (!contador)
         begin

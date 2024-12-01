@@ -139,9 +139,9 @@ module controlador_imagens
     // Atualização de imagens baseada no estado
     always @(posedge clk) 
     begin
-        //if (estado === INTRO)
-        //    data_to_send <= memoria_intro_0[byte_counter];
-        //else begin
+        // if (estado === INTRO)
+        //     data_to_send <= memoria_intro_0[byte_counter];
+        // else 
             //==================================== FELICIDADE ====================================
 
             if (byte_counter == 65 ||     //  8 * 8 + 1 = 65
