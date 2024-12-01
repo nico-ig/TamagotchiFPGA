@@ -210,8 +210,9 @@ module controlador_imagens
                     default: data_to_send <= 0;
                 endcase
             //==================================== FELICIDADE ====================================
-            end 
-            else if (byte_counter == 65 ||     //  8 * 8 + 1 = 65
+            //end 
+            //else 
+            if (byte_counter == 65 ||     //  8 * 8 + 1 = 65
                 byte_counter == 73 ||     //  9 * 8 + 1 = 73
                 byte_counter == 81 ||     // 10 * 8 + 1 = 81
                 byte_counter == 89 ||     // 11 * 8 + 1 = 89
