@@ -131,7 +131,7 @@ module controlador_imagens
     end
 
     always @(posedge clk) begin 
-        if (felicidade > 85 && fome > 85 && sono > 85) 
+        if (felicidade > 80 && fome > 80 && sono > 80) 
             i_idle <= 0;
         else if (felicidade < 10) 
             i_idle <= 2;
