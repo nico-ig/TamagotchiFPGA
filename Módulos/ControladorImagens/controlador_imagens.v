@@ -24,12 +24,42 @@ module controlador_imagens
                MORTO_SIZE = 8;
 
     // Memória para armazenar todas as imagens inicialmente
-    reg[7:0] memoria_intro [0:INTRO_SIZE*1024 - 1];
-    reg[7:0] memoria_idle [0:IDLE_SIZE*1024 - 1];
-    reg[7:0] memoria_dormindo [0:DORMINDO_SIZE*1024 - 1];
-    reg[7:0] memoria_comendo [0:COMENDO_SIZE*1024 - 1];
-    reg[7:0] memoria_dando_aula [0:DANDO_AULA_SIZE*1024 - 1];
-    reg[7:0] memoria_morto [0:MORTO_SIZE*1024 - 1];
+    reg[7:0] memoria_intro_0 [0:1023];
+
+    reg[7:0] memoria_idle_0 [0:1023];
+    reg[7:0] memoria_idle_1 [0:1023];
+    reg[7:0] memoria_idle_2 [0:1023];
+    reg[7:0] memoria_idle_3 [0:1023];
+    reg[7:0] memoria_idle_4 [0:1023];
+    reg[7:0] memoria_idle_5 [0:1023];
+
+    reg[7:0] memoria_dormindo_0 [0:1023];
+    reg[7:0] memoria_dormindo_1 [0:1023];
+    reg[7:0] memoria_dormindo_2 [0:1023];
+    reg[7:0] memoria_dormindo_3 [0:1023];
+
+    reg[7:0] memoria_comendo_0 [0:1023];
+    reg[7:0] memoria_comendo_1 [0:1023];
+    reg[7:0] memoria_comendo_2 [0:1023];
+    reg[7:0] memoria_comendo_3 [0:1023];
+    reg[7:0] memoria_comendo_4 [0:1023];
+
+    reg[7:0] memoria_dando_aula_0 [0:1023];
+    reg[7:0] memoria_dando_aula_1 [0:1023];
+    reg[7:0] memoria_dando_aula_2 [0:1023];
+    reg[7:0] memoria_dando_aula_3 [0:1023];
+    reg[7:0] memoria_dando_aula_4 [0:1023];
+    reg[7:0] memoria_dando_aula_5 [0:1023];
+    reg[7:0] memoria_dando_aula_6 [0:1023];
+
+    reg[7:0] memoria_morto_0 [0:1023];
+    reg[7:0] memoria_morto_1 [0:1023];
+    reg[7:0] memoria_morto_2 [0:1023];
+    reg[7:0] memoria_morto_3 [0:1023];
+    reg[7:0] memoria_morto_4 [0:1023];
+    reg[7:0] memoria_morto_5 [0:1023];
+    reg[7:0] memoria_morto_6 [0:1023];
+    reg[7:0] memoria_morto_7 [0:1023];
 
     // Inicializa a memória
     initial
@@ -38,70 +68,80 @@ module controlador_imagens
         fome = 22;
         sono = 84;
 
-        // Testando os índices desse jeito [x*1024-y], se der errado pensar se foi isso que causou
+        $readmemh("hexs/Intro/zanagotchi_intro1.hex", memoria_intro_0);
 
-        $readmemh("hexs/Intro/zanagotchi_intro1.hex", memoria_intro, 0, 1023);
+        $readmemh("hexs/Idle/zanagotchi_idle1.hex", memoria_idle_0);
+        $readmemh("hexs/Idle/zanagotchi_idle2.hex", memoria_idle_1);
+        $readmemh("hexs/Idle/zanagotchi_idle3.hex", memoria_idle_2);
+        $readmemh("hexs/Idle/zanagotchi_idle4.hex", memoria_idle_3);
+        $readmemh("hexs/Idle/zanagotchi_idle5.hex", memoria_idle_4);
+        $readmemh("hexs/Idle/zanagotchi_idle6.hex", memoria_idle_5);
 
-        $readmemh("hexs/Idle/zanagotchi_idle1.hex", memoria_idle, 0*1024, (1*1024)-1);
-        $readmemh("hexs/Idle/zanagotchi_idle2.hex", memoria_idle, 1*1024, (2*1024)-1);
-        $readmemh("hexs/Idle/zanagotchi_idle3.hex", memoria_idle, 2*1024, (3*1024)-1);
-        $readmemh("hexs/Idle/zanagotchi_idle4.hex", memoria_idle, 3*1024, (4*1024)-1);
-        $readmemh("hexs/Idle/zanagotchi_idle5.hex", memoria_idle, 4*1024, (5*1024)-1);
-        $readmemh("hexs/Idle/zanagotchi_idle6.hex", memoria_idle, 5*1024, (6*1024)-1);
+        $readmemh("hexs/Dormindo/zanagotchi_dormindo1.hex", memoria_dormindo_0);
+        $readmemh("hexs/Dormindo/zanagotchi_dormindo2.hex", memoria_dormindo_1);
+        $readmemh("hexs/Dormindo/zanagotchi_dormindo3.hex", memoria_dormindo_2);
+        $readmemh("hexs/Dormindo/zanagotchi_dormindo4.hex", memoria_dormindo_3);
 
-        $readmemh("hexs/Dormindo/zanagotchi_dormindo1.hex", memoria_dormindo, 0*1024, (1*1024)-1);
-        $readmemh("hexs/Dormindo/zanagotchi_dormindo2.hex", memoria_dormindo, 1*1024, (2*1024)-1);
-        $readmemh("hexs/Dormindo/zanagotchi_dormindo3.hex", memoria_dormindo, 2*1024, (3*1024)-1);
-        $readmemh("hexs/Dormindo/zanagotchi_dormindo4.hex", memoria_dormindo, 3*1024, (4*1024)-1);
+        $readmemh("hexs/Comendo/zanagotchi_comendo1.hex", memoria_comendo_0);
+        $readmemh("hexs/Comendo/zanagotchi_comendo2.hex", memoria_comendo_1);
+        $readmemh("hexs/Comendo/zanagotchi_comendo3.hex", memoria_comendo_2);
+        $readmemh("hexs/Comendo/zanagotchi_comendo4.hex", memoria_comendo_3);
+        $readmemh("hexs/Comendo/zanagotchi_comendo5.hex", memoria_comendo_4);
 
-        $readmemh("hexs/Comendo/zanagotchi_comendo1.hex", memoria_comendo, 0*1024, (1*1024)-1);
-        $readmemh("hexs/Comendo/zanagotchi_comendo2.hex", memoria_comendo, 1*1024, (2*1024)-1);
-        $readmemh("hexs/Comendo/zanagotchi_comendo3.hex", memoria_comendo, 2*1024, (3*1024)-1);
-        $readmemh("hexs/Comendo/zanagotchi_comendo4.hex", memoria_comendo, 3*1024, (4*1024)-1);
-        $readmemh("hexs/Comendo/zanagotchi_comendo5.hex", memoria_comendo, 4*1024, (5*1024)-1);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula1.hex", memoria_dando_aula_0);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula2.hex", memoria_dando_aula_1);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula3.hex", memoria_dando_aula_2);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula4.hex", memoria_dando_aula_3);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula5.hex", memoria_dando_aula_4);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula6.hex", memoria_dando_aula_5);
+        $readmemh("hexs/DandoAula/zanagotchi_dando_aula7.hex", memoria_dando_aula_6);
 
-        $readmemh("hexs/DandoAula/zanagotchi_dando_aula1.hex", memoria_dando_aula, 0*1024, (1*1024)-1);
-        $readmemh("hexs/DandoAula/zanagotchi_dando_aula2.hex", memoria_dando_aula, 1*1024, (2*1024)-1);
-        $readmemh("hexs/DandoAula/zanagotchi_dando_aula3.hex", memoria_dando_aula, 2*1024, (3*1024)-1);
-        $readmemh("hexs/DandoAula/zanagotchi_dando_aula4.hex", memoria_dando_aula, 3*1024, (4*1024)-1);
-        $readmemh("hexs/DandoAula/zanagotchi_dando_aula5.hex", memoria_dando_aula, 4*1024, (5*1024)-1);
-        $readmemh("hexs/DandoAula/zanagotchi_dando_aula6.hex", memoria_dando_aula, 5*1024, (6*1024)-1);
-        $readmemh("hexs/DandoAula/zanagotchi_dando_aula7.hex", memoria_dando_aula, 6*1024, (7*1024)-1);
-
-        $readmemh("hexs/Morto/zanagotchi_morto1.hex", memoria_morto, 0*1024, (1*1024)-1);
-        $readmemh("hexs/Morto/zanagotchi_morto2.hex", memoria_morto, 1*1024, (2*1024)-1);
-        $readmemh("hexs/Morto/zanagotchi_morto3.hex", memoria_morto, 2*1024, (3*1024)-1);
-        $readmemh("hexs/Morto/zanagotchi_morto4.hex", memoria_morto, 3*1024, (4*1024)-1);
-        $readmemh("hexs/Morto/zanagotchi_morto5.hex", memoria_morto, 4*1024, (5*1024)-1);
-        $readmemh("hexs/Morto/zanagotchi_morto6.hex", memoria_morto, 5*1024, (6*1024)-1);
-        $readmemh("hexs/Morto/zanagotchi_morto7.hex", memoria_morto, 6*1024, (7*1024)-1);
-        $readmemh("hexs/Morto/zanagotchi_morto8.hex", memoria_morto, 7*1024, (8*1024)-1);
-
+        $readmemh("hexs/Morto/zanagotchi_morto1.hex", memoria_morto_0);
+        $readmemh("hexs/Morto/zanagotchi_morto2.hex", memoria_morto_1);
+        $readmemh("hexs/Morto/zanagotchi_morto3.hex", memoria_morto_2);
+        $readmemh("hexs/Morto/zanagotchi_morto4.hex", memoria_morto_3);
+        $readmemh("hexs/Morto/zanagotchi_morto5.hex", memoria_morto_4);
+        $readmemh("hexs/Morto/zanagotchi_morto6.hex", memoria_morto_5);
+        $readmemh("hexs/Morto/zanagotchi_morto7.hex", memoria_morto_6);
+        $readmemh("hexs/Morto/zanagotchi_morto8.hex", memoria_morto_7);
     end
 
     reg [22:0] frame_counter = 23'd1;
-    reg [7:0] i_intro = 0;
-    reg [7:0] i_idle = 0;
-    reg [7:0] i_dormindo = 0;
-    reg [7:0] i_comendo = 0;
-    reg [7:0] i_dando_aula = 0;
-    reg [7:0] i_morto = 0;
+   
+    reg [2:0] i_idle = 0;
+    reg [2:0] i_dormindo = 0;
+    reg [2:0] i_comendo = 0;
+    reg [2:0] i_dando_aula = 0;
+    reg [2:0] i_morto = 0;
 
-    // always @(posedge clk) begin 
-    //     frame_counter <= frame_counter + 23'd1;
-    //     if (frame_counter == 0) begin
-    //         i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
-    //     end
-    // end
+    reg [9:0] byte_counter_idle = 0;
+    reg [3:0] idle_offset = 0;
+    reg offset_idle_counter = 0;
+
+    always @(posedge clk) begin
+        byte_counter_idle <= byte_counter + idle_offset * (byte_counter > 10'd300);
+    end
+
+    always @(posedge clk) begin 
+        frame_counter <= frame_counter + 23'd1;
+        if (frame_counter == 0) begin
+            offset_idle_counter <= offset_idle_counter + 1'd1;
+            if (offset_idle_counter == 0) idle_offset <= idle_offset + 4'd8;
+            
+            i_idle <= 3'd5;
+            i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
+            i_comendo <= (i_comendo + 1) % COMENDO_SIZE;
+            i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
+            i_morto <= (i_morto + 1) % MORTO_SIZE;
+        end
+    end
 
     // Atualização de imagens baseada no estado
     always @(posedge clk) 
     begin
-
         if (estado === INTRO)
-            data_to_send <= memoria_intro[i_intro*1024 + byte_counter];
-        else
-        begin
+            data_to_send <= memoria_intro_0[byte_counter];
+        else begin
             //==================================== FELICIDADE ====================================
 
             if (byte_counter == 65 ||     //  8 * 8 + 1 = 65
@@ -293,12 +333,67 @@ module controlador_imagens
 
             begin
                 case (estado)
-                    IDLE: data_to_send <= memoria_idle[i_idle*1024 + byte_counter];
-                    DORMINDO: data_to_send <= memoria_dormindo[i_dormindo*1024 + byte_counter];
-                    COMENDO: data_to_send <= memoria_comendo[i_comendo*1024 + byte_counter];
-                    DANDO_AULA: data_to_send <= memoria_dando_aula[i_dando_aula*1024 + byte_counter];
-                    MORTO: data_to_send <= memoria_morto[i_morto*1024 + byte_counter];
-                    default: data_to_send <= memoria_idle[i_idle*1024 + byte_counter];
+                    IDLE:
+                    begin
+                        case (i_idle)
+                        3'd0: data_to_send <= memoria_idle_0[byte_counter_idle];
+                        3'd1: data_to_send <= memoria_idle_1[byte_counter_idle];
+                        3'd2: data_to_send <= memoria_idle_2[byte_counter_idle];
+                        3'd3: data_to_send <= memoria_idle_3[byte_counter_idle];
+                        3'd4: data_to_send <= memoria_idle_4[byte_counter_idle];
+                        3'd5: data_to_send <= memoria_idle_5[byte_counter_idle];
+                        default: data_to_send <= 0;
+                        endcase
+                    end
+                    DORMINDO:
+                    begin
+                        case (i_dormindo)
+                        3'd0: data_to_send <= memoria_dormindo_0[byte_counter];
+                        3'd1: data_to_send <= memoria_dormindo_1[byte_counter];
+                        3'd2: data_to_send <= memoria_dormindo_2[byte_counter];
+                        3'd3: data_to_send <= memoria_dormindo_3[byte_counter];
+                        default: data_to_send <= 0;
+                        endcase
+                    end
+                    COMENDO:
+                    begin
+                        case (i_comendo)
+                        3'd0: data_to_send <= memoria_comendo_0[byte_counter];
+                        3'd1: data_to_send <= memoria_comendo_1[byte_counter];
+                        3'd2: data_to_send <= memoria_comendo_2[byte_counter];
+                        3'd3: data_to_send <= memoria_comendo_3[byte_counter];
+                        3'd4: data_to_send <= memoria_comendo_4[byte_counter];
+                        default: data_to_send <= 0;
+                        endcase
+                    end
+                    DANDO_AULA:
+                    begin
+                        case (i_dando_aula)
+                        3'd0: data_to_send <= memoria_dando_aula_0[byte_counter];
+                        3'd1: data_to_send <= memoria_dando_aula_1[byte_counter];
+                        3'd2: data_to_send <= memoria_dando_aula_2[byte_counter];
+                        3'd3: data_to_send <= memoria_dando_aula_3[byte_counter];
+                        3'd4: data_to_send <= memoria_dando_aula_4[byte_counter];
+                        3'd5: data_to_send <= memoria_dando_aula_5[byte_counter];
+                        3'd6: data_to_send <= memoria_dando_aula_6[byte_counter];
+                        default: data_to_send <= 0;
+                        endcase
+                    end
+                    MORTO:
+                    begin
+                        case (i_morto)
+                        3'd0: data_to_send <= memoria_morto_0[byte_counter];
+                        3'd1: data_to_send <= memoria_morto_1[byte_counter];
+                        3'd2: data_to_send <= memoria_morto_2[byte_counter];
+                        3'd3: data_to_send <= memoria_morto_3[byte_counter];
+                        3'd4: data_to_send <= memoria_morto_4[byte_counter];
+                        3'd5: data_to_send <= memoria_morto_5[byte_counter];
+                        3'd6: data_to_send <= memoria_morto_6[byte_counter];
+                        3'd7: data_to_send <= memoria_morto_6[byte_counter];
+                        default data_to_send <= 0;
+                        endcase
+                    end
+                    default: data_to_send <= 0;
                 endcase
             end 
         end
