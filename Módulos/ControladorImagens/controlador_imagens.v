@@ -119,7 +119,7 @@ module controlador_imagens
         frame_counter <= frame_counter + 23'd1;
         if (frame_counter == 0) begin
             idle_offset <= idle_offset + 4'd8;
-            i_idle <= (i_idle + 1) % IDLE_SIZE;
+            i_idle <= 3'd5;
             i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
             i_comendo <= (i_comendo + 1) % COMENDO_SIZE;
             i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
