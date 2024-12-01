@@ -139,9 +139,9 @@ module controlador_imagens
     // Atualização de imagens baseada no estado
     always @(posedge clk) 
     begin
-        if (estado === INTRO)
-            data_to_send <= memoria_intro_0[byte_counter];
-        else begin
+        //if (estado === INTRO)
+        //    data_to_send <= memoria_intro_0[byte_counter];
+        //else begin
             //==================================== FELICIDADE ====================================
 
             if (byte_counter == 65 ||     //  8 * 8 + 1 = 65
@@ -333,6 +333,8 @@ module controlador_imagens
 
             begin
                 case (estado)
+                    INTRO:
+                        data_to_send <= memoria_intro_0[byte_counter];
                     IDLE:
                     begin
                         case (i_idle)
@@ -389,14 +391,14 @@ module controlador_imagens
                         3'd4: data_to_send <= memoria_morto_4[byte_counter];
                         3'd5: data_to_send <= memoria_morto_5[byte_counter];
                         3'd6: data_to_send <= memoria_morto_6[byte_counter];
-                        3'd7: data_to_send <= memoria_morto_6[byte_counter];
+                        3'd7: data_to_send <= memoria_morto_7[byte_counter];
                         default data_to_send <= 0;
                         endcase
                     end
                     default: data_to_send <= 0;
                 endcase
             end 
-        end
+        //end
     end
 
 endmodule
