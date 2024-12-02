@@ -130,7 +130,7 @@ module controlador_imagens
         byte_counter_idle <= byte_counter + idle_offset * (byte_counter > 10'd300);
     end
 
-    reg [3:0] num_aleatorio;
+    wire [3:0] num_aleatorio;
     gerador_aleatorio_32 GAL (.clk(clk), .data(num_aleatorio));
 
     always @(posedge clk) begin 
