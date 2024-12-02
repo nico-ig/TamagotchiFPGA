@@ -110,6 +110,14 @@ module controlador_imagens
     reg [2:0] i_dando_aula = 0;
     reg [2:0] i_morto = 0;
 
+    reg [9:0] byte_counter_intro = 0;
+    reg [3:0] intro_offset = 0;
+    reg offset_intro_counter = 0;
+
+    always @(posedge clk) begin
+        byte_counter_intro <= byte_counter + intro_offset * (byte_counter > 10'd300);
+    end
+
     reg [9:0] byte_counter_idle = 0;
     reg [3:0] idle_offset = 0;
     reg offset_idle_counter = 0;
@@ -121,8 +129,12 @@ module controlador_imagens
     always @(posedge clk) begin 
         frame_counter <= frame_counter + 23'd1;
         if (frame_counter == 0) begin
+            offset_intro_counter <= offset_intro_counter + 1'd1;
+            if (offset_intro_counter == 0) intro_offset <= intro_offset + 4'd8;
+
             offset_idle_counter <= offset_idle_counter + 1'd1;
             if (offset_idle_counter == 0) idle_offset <= idle_offset + 4'd8;
+
             i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
             i_comendo <= (i_comendo + 1) % COMENDO_SIZE;
             i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
@@ -340,7 +352,7 @@ module controlador_imagens
             begin
                 case (estado)
                     INTRO:
-                        data_to_send <= memoria_intro_0[byte_counter];
+                        data_to_send <= memoria_intro_0[byte_counter_intro];
                     IDLE:
                     begin
                         case (i_idle)
