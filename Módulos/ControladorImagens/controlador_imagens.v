@@ -115,7 +115,7 @@ module controlador_imagens
     reg offset_intro_counter = 0;
 
     always @(posedge clk) begin
-        byte_counter_intro <= byte_counter + intro_offset * (byte_counter > 10'd300);
+        byte_counter_intro <= byte_counter + intro_offset * (byte_counter > 10'd512);
     end
 
     reg [9:0] byte_counter_idle = 0;
