@@ -1,6 +1,6 @@
 // https://en.wikipedia.org/wiki/Linear-feedback_shift_register
 module gerador_aleatorio_32 (
-    input clk,
+    input wire clk,
     output reg [31:0] data
 );
 
