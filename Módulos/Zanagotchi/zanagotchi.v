@@ -9,7 +9,7 @@ module zanagotchi
 );
     wire[4:0] estado;
     wire[7:0] fome, felicidade, sono;
-    wire morreu, b1_aux, b2_aux;
+    wire morreu, b1_aux, b2_aux, b1_hold, b2_hold;
     wire[7:0] data_to_send;
     wire[9:0] byte_counter;
 
@@ -18,14 +18,16 @@ module zanagotchi
     (
         .clk(clk),
         .b_in(b1),
-        .b_out(b1_aux)
+        .b_out(b1_aux),
+        .b_hold_out(b1_hold)
     );
 
     controlador_botao B2
     (
         .clk(clk),
         .b_in(b2),
-        .b_out(b2_aux)
+        .b_out(b2_aux),
+        .b_hold_out(b2_hold)
     );
 
     // Instancia o módulo de controle de estados
@@ -34,6 +36,8 @@ module zanagotchi
         .clk(clk), 
         .b1(b1_aux), 
         .b2(b2_aux),
+        .b1_hold(b1_hold),
+        .b2_hold(b2_hold),
         .fome(fome), 
         .felicidade(felicidade), 
         .sono(sono),

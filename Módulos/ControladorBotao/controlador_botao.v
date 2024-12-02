@@ -1,13 +1,16 @@
 module controlador_botao
 (
     input b_in, clk,
-    output reg b_out
+    output reg b_out,
+    output wire b_hold_out
 );
 
 reg dirty = 0;
 reg [7:0] counter = 0;
 
 initial b_out = 0;
+
+assign b_hold_out = dirty;
 
 always @ (posedge clk)
 begin
@@ -21,7 +24,6 @@ begin
             dirty <= 1;
         end
         counter <= counter + 4'b1;
-
     // O botao esta solto e um pulso foi gerado
     end else if (b_in === 1 && dirty)
     begin
@@ -30,7 +32,7 @@ begin
             dirty <= 0;
         counter <= counter + 4'b1;
 
-    end else 
+    end else
         b_out <= 0;
 end
 endmodule

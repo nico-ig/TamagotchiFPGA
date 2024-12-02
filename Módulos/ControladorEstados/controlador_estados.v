@@ -1,6 +1,6 @@
 module controlador_estados
 (
-    input wire b1, b2, clk,
+    input wire b1, b2, b1_hold, b2_hold, clk,
     input wire [7:0] fome, felicidade, sono,
     output reg[4:0] estado
 );
@@ -14,6 +14,7 @@ module controlador_estados
 
     reg b1_reg = 0, b2_reg = 0;
     reg [21:0] counter = 22'b0;
+    reg [26:0] reset_counter = 27'b1;
 
     initial
     begin
@@ -23,7 +24,9 @@ module controlador_estados
     // Lógica principal
     always @(posedge clk) 
     begin
-        if (!counter)
+        if (!reset_counter)
+            estado <= INTRO;
+        else if (!counter)
         begin
             if (estado === MORTO || !fome || !sono || !felicidade)
                 estado <= MORTO;
@@ -42,5 +45,6 @@ module controlador_estados
         b2_reg <= (b2_reg || b2) && counter;
 
         counter <= counter + 22'b1;
+        reset_counter <= (b1_hold && b2_hold) ? reset_counter + 27'b1 :27'b1;
     end
 endmodule

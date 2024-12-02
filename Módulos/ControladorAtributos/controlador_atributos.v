@@ -17,6 +17,11 @@ module controlador_atributos
                MAX_SONO = 8'd100,
                MAX_FELICIDADE = 8'd100;
 
+    // MAX ATRIBUTOS
+    localparam INIT_FOME = 8'd80,
+               INIT_SONO = 8'd70,
+               INIT_FELICIDADE = 8'd50;
+
     // Velocidades atributos
     localparam VEL_DESCIDA = 8'd1,
                VEL_SUBIDA = 8'd3;
@@ -27,26 +32,26 @@ module controlador_atributos
     // Estado inicial
     initial 
     begin
-        fome = 8'd80;
-        felicidade = 8'd70;
-        sono = 8'd50;
+        fome = INIT_FOME;
+        felicidade = INIT_FELICIDADE;
+        sono = INIT_SONO;
         contador = 16'b0;
     end
 
     // Lógica principal
     always @(posedge clk) 
     begin       
-        contador <= contador + 26'b1;
+        contador <= contador + 23'b1;
 
         if (!contador)
         begin
             // Incremento/decrementando de atributos
             case(estado)
-                INTRO:
+                INTRO, MORTO:
                 begin
-                    sono <= sono;
-                    fome <= fome;
-                    felicidade <= felicidade;
+                    sono <= INIT_SONO;
+                    fome <= INIT_FOME;
+                    felicidade <= INIT_FELICIDADE;
                 end
                 DORMINDO:
                 begin
