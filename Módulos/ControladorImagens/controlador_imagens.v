@@ -58,7 +58,6 @@ module controlador_imagens
     reg[7:0] memoria_morto_4 [0:1023];
     reg[7:0] memoria_morto_5 [0:1023];
     reg[7:0] memoria_morto_6 [0:1023];
-    reg[7:0] memoria_morto_7 [0:1023];
 
     // Inicializa a memória
     initial
@@ -99,7 +98,6 @@ module controlador_imagens
         $readmemh("hexs/Morto/zanagotchi_morto5.hex", memoria_morto_4);
         $readmemh("hexs/Morto/zanagotchi_morto6.hex", memoria_morto_5);
         $readmemh("hexs/Morto/zanagotchi_morto7.hex", memoria_morto_6);
-        $readmemh("hexs/Morto/zanagotchi_morto8.hex", memoria_morto_7);
     end
 
     reg [21:0] frame_counter = 22'd1;
@@ -429,7 +427,7 @@ module controlador_imagens
                         3'd4: data_to_send <= memoria_morto_4[byte_counter];
                         3'd5: data_to_send <= memoria_morto_5[byte_counter];
                         3'd6: data_to_send <= memoria_morto_6[byte_counter];
-                        3'd7: data_to_send <= memoria_morto_7[byte_counter];
+                        3'd7: data_to_send <= 8'hFF;
                         default data_to_send <= 0;
                         endcase
                     end
