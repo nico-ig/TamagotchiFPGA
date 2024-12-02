@@ -130,6 +130,9 @@ module controlador_imagens
         byte_counter_idle <= byte_counter + idle_offset * (byte_counter > 10'd300);
     end
 
+    reg [3:0] num_aleatorio;
+    gerador_aleatorio_32 GAL (.clk(clk), .data(num_aleatorio));
+
     always @(posedge clk) begin 
         frame_counter <= frame_counter + 22'd1;
         if (frame_counter == 0) begin
@@ -142,13 +145,20 @@ module controlador_imagens
             dormindo_counter <= dormindo_counter + 1'd1;
             if (dormindo_counter == 0) i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
 
-            comendo_counter <= comendo_counter + 1'd1;
-            if (comendo_counter == 0) i_comendo <= (i_comendo + 1) % COMENDO_SIZE;
+            if (estado != COMENDO) 
+                i_comendo <= 0;
+            else begin
+                comendo_counter <= comendo_counter + 1'd1;
+                if (comendo_counter == 0) i_comendo <= (i_comendo + 1) % COMENDO_SIZE;
+            end
 
             dando_aula_counter <= dando_aula_counter + 1'd1;
-            if (dando_aula_counter == 0) i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
+            if (dando_aula_counter == 0) i_dando_aula <= num_aleatorio % DANDO_AULA_SIZE;
 
-            i_morto <= (i_morto + 1) % MORTO_SIZE;
+            if (num_aleatorio == 4'd13)
+                i_morto <= 7;
+            else
+                i_morto <= (i_morto + 1) % (MORTO_SIZE - 1);
         end
     end
 
