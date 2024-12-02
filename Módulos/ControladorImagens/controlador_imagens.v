@@ -112,7 +112,7 @@ module controlador_imagens
 
     reg [9:0] byte_counter_intro = 0;
     reg [3:0] intro_offset = 0;
-    reg offset_intro_counter = 0;
+    reg [1:0] offset_intro_counter = 0;
 
     always @(posedge clk) begin
         byte_counter_intro <= byte_counter + intro_offset * (byte_counter > 10'd512);
@@ -120,11 +120,11 @@ module controlador_imagens
 
     reg [9:0] byte_counter_idle = 0;
     reg [3:0] idle_offset = 0;
-    reg offset_idle_counter = 0;
+    reg [1:0] offset_idle_counter = 0;
 
-    reg dormindo_counter = 0;
-    reg dando_aula_counter = 0;
-    reg comendo_counter = 0;
+    reg [1:0] dormindo_counter = 0;
+    reg [1:0] dando_aula_counter = 0;
+    reg [1:0] comendo_counter = 0;
 
     always @(posedge clk) begin
         byte_counter_idle <= byte_counter + idle_offset * (byte_counter > 10'd300);
