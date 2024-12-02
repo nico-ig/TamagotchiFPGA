@@ -133,17 +133,19 @@ module controlador_imagens
     always @(posedge clk) begin 
         frame_counter <= frame_counter + 22'd1;
         if (frame_counter == 0) begin
-            offset_intro_counter <= offset_intro_counter + 1'd1;
+            offset_intro_counter <= offset_intro_counter + 2'd1;
             if (offset_intro_counter == 0) intro_offset <= intro_offset + 4'd8;
 
-            offset_idle_counter <= offset_idle_counter + 1'd1;
+            offset_idle_counter <= offset_idle_counter + 2'd1;
             if (offset_idle_counter == 0) idle_offset <= idle_offset + 4'd8;
 
-
+            dormindo_counter <= dormindo_counter + 2'd1;
             if (dormindo_counter == 0) i_dormindo <= (i_dormindo + 1) % DORMINDO_SIZE;
 
+            comendo_counter <= comendo_counter + 2'd1;
             if (comendo_counter == 0) i_comendo <= (i_comendo + 1) % COMENDO_SIZE;
 
+            dando_aula_counter <= dando_aula_counter + 2'd1;
             if (dando_aula_counter == 0) i_dando_aula <= (i_dando_aula + 1) % DANDO_AULA_SIZE;
 
             i_morto <= (i_morto + 1) % MORTO_SIZE;
