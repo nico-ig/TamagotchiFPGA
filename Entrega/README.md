@@ -1,4 +1,4 @@
-# ZANAGOTCHI  
+# TAMAGOTCHI  
 
 Implementação em Verilog de um tamagotchi para ser utilizado em FPGA's.  
 
@@ -7,17 +7,17 @@ O conceito do Tamagotchi é ser uma espécie de pet que o dono tem que cuidar.
 ![Maquina de estados](Diagramas/maquina_de_estados.png) 
 
 Para uma primeira implementação, geramos essa máquina de estados: </br>
-**IDLE** - Zanagotchi parado executando animações mostrando ele se mexendo, olhando em volta, etc. 
+**IDLE** - Tamagotchi parado executando animações mostrando ele se mexendo, olhando em volta, etc. 
 
-- Ao pressionar o botão **1**: Zanagotchi vai para o estado *COMENDO*;
-- Ao pressionar o botão **2**: Zanagotchi vai para o estado *DORMINDO*;
-- Ao pressionar o botão **1 e 2** juntos: Zanagotchi vai para o estado *DANDO_AULA*;
+- Ao pressionar o botão **1**: Tamagotchi vai para o estado *COMENDO*;
+- Ao pressionar o botão **2**: Tamagotchi vai para o estado *DORMINDO*;
+- Ao pressionar o botão **1 e 2** juntos: Tamagotchi vai para o estado *DANDO_AULA*;
 - Ao segurar o botão **1 e 2** juntos: Reseta o game, volta para a tela de *INTRO* com os atributos iniciais;  
 
 **INTRO** - Tela inicial do jogo, ao apertar algum botão vai para **IDLE** </br>
-**COMENDO** - Zanagotchi executa animação de comer e seu atributo **Fome** aumenta em uma taxa constante. </br>
-**DORMINDO** - Zanagotchi executa animação de dormir e seu atributo **Sono** aumenta em uma taxa constante. </br>
-**DANDO_AULA** - Zanagotchi executa animação de dar aula e seu atributo **Felicidade** aumenta em uma taxa constante. </br>
+**COMENDO** - Tamagotchi executa animação de comer e seu atributo **Fome** aumenta em uma taxa constante. </br>
+**DORMINDO** - Tamagotchi executa animação de dormir e seu atributo **Sono** aumenta em uma taxa constante. </br>
+**DANDO_AULA** - Tamagotchi executa animação de dar aula e seu atributo **Felicidade** aumenta em uma taxa constante. </br>
 **MORTO** - Se algum dos atributos chegar a um valor menor ou igual a 10, um túmulo é mostrado na tela. </br>
 
 ## Funcionamento  
@@ -30,9 +30,9 @@ Durante todas as telas (Menos a de morte e de intro), as barras de Fome, Sono e 
 
 ## Módulos
 
-### Zanagotchi
+### Tamagotchi
 
-Módulo do topo que junta todos os módulos necessários para funcionamento do Zanagotchi.
+Módulo do topo que junta todos os módulos necessários para funcionamento do Tamagotchi.
 
 ### Controlador Estados  
 
