@@ -56,4 +56,22 @@ Módulo que controla operações sobre os atributos definidos baseado no estado 
 
 # Demonstração
 
-![Demo](Demo/demo.mp4)
+https://github.com/user-attachments/assets/c40858f9-f8aa-432d-b677-2abeecd659a0
+
+https://github.com/user-attachments/assets/c27b20bd-8ed9-48cc-8310-7b1dbebad947
+
+https://github.com/user-attachments/assets/d2f8234d-6d3c-4a06-8f7a-0b176bbc055d
+
+https://github.com/user-attachments/assets/436bda3e-b3ae-4d3b-855d-912720f47fe8
+
+![sad_screen](https://github.com/user-attachments/assets/6ec6da02-4349-4143-ad4b-a19c7315560e)
+
+![idle_screen](https://github.com/user-attachments/assets/b71782d6-3a8f-4528-816f-b18af79e280a)
+
+![init_screen](https://github.com/user-attachments/assets/7ee596e2-d8c4-4066-b355-bbd78907ef2c)
+
+![wiring-1](https://github.com/user-attachments/assets/8138d743-958a-4a63-87a4-94085140eb43)
+
+![wiring-2](https://github.com/user-attachments/assets/f70db41b-acbc-4aa9-ad51-2351de7fdcb7)
+
+![wiring-top](https://github.com/user-attachments/assets/f61971b8-fd9c-4c20-8bca-6839d7820e3a)
